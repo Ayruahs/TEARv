@@ -32,7 +32,8 @@
             android:label="@string/title_activity_home_page"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".ForgetpasswordActivity"></activity>
+        <activity android:name=".ForgetpasswordActivity" />
+        <activity android:name=".CarInfoActivity"></activity>
     </application>
 
 </manifest>
