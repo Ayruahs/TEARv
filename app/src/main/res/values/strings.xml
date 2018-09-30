@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">TEARv</string>
 
-    <!-- Strings related to login -->
+    <!-- Strings related to login/register -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_new_user">New User</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_forget_password">Forget password?</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -91,4 +95,8 @@
     <string name="title_activity_home_page">HomePageActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="title_activity_car_info">CarInfoActivity</string>
 </resources>
