@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "449799068784",
+    "firebase_url": "https://tearv-c6f27.firebaseio.com",
+    "project_id": "tearv-c6f27",
+    "storage_bucket": "tearv-c6f27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449799068784:android:cb7dc16a3a2f775b",
+        "android_client_info": {
+          "package_name": "com.tearvandroid.tearvandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449799068784-khntfojingtobub0c4i5m7mpqf3a3eum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tearvandroid.tearvandroid",
+            "certificate_hash": "f38262b79b8ee047af1966e73abdee1c08f85244"
+          }
+        },
+        {
+          "client_id": "449799068784-g7nvvobaaak9m5fkn42sen68k8kn9vkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDko_VbkwP1VU8P3_iXt7keQrL56Zz5OhY"
+        },
+        {
+          "current_key": "AIzaSyDko_VbkwP1VU8P3_iXt7keQrL56Zz5OhY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449799068784-g7nvvobaaak9m5fkn42sen68k8kn9vkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
