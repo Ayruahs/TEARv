@@ -1,4 +1,4 @@
-package com.example.rahulballa.a307project;
+package com.tearvandroid.tearvandroid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
