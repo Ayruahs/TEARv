@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">TEARv</string>
+    <string name="action_cancel">Cancel</string>
 
     <!-- Strings related to login/register -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_new_user">New User</string>
+    <string name="action_sign_up">Sign up</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
@@ -20,6 +22,7 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="edit_password">Change Password</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

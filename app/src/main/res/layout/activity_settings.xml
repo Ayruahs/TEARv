@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,4 +14,48 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SettingsActivity">
 
-    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/username_title"
+            android:layout_width="145dp"
+            android:layout_height="59dp"
+
+            android:text="@string/prompt_username" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="67dp"
+            android:layout_height="59dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="dummy user" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:baselineAligned="false"
+            android:padding="2dp"
+            android:tint="@color/black_overlay"
+            app:srcCompat="@drawable/ic_pencil" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="9dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

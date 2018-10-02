@@ -3,6 +3,7 @@ package com.tearvandroid.tearvandroid;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_action);
+        Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +92,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button mRegisterButton = (Button)findViewById(R.id.sign_up_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openRegister();
+            }
+        });
         mLoginFormView = findViewById(R.id.login_window);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -138,9 +146,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    /**
+     * Open register form and Attempts to register the account specified by the form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
+     */
+    private void openRegister(){
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+    }
+
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
