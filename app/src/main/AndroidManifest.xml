@@ -30,6 +30,14 @@
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".ForgetpasswordActivity" />
+        <activity
+            android:name=".CarInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_car_info"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
