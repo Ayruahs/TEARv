@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Name: Car1"
+                    android:text="Name: Car2"
                     android:textSize="22dp" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
-                    android:text="IP address: 92830-38472"
+                    android:text="IP address: 93472-35252"
                     android:textSize="18dp" />
 
                 <TextView

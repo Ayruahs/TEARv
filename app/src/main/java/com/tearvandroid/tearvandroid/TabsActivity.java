@@ -18,6 +18,7 @@ public class TabsActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -31,17 +32,20 @@ public class TabsActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
 
+
                         case R.id.nav_analytics:
                             selectedFragment = new AnalyticsFragment();
+                            break;
+
+
+                        case R.id.nav_cars:
+                            selectedFragment = new CarsInfoFragment();
                             break;
 
                         case R.id.nav_settings:
                             selectedFragment = new SettingsFragment();
                             break;
 
-                        case R.id.nav_cars:
-                            selectedFragment = new CarsInfoFragment();
-                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
