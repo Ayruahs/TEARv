@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             //Segue to main app
-            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+            startActivity(new Intent(LoginActivity.this, TabsActivity.class));
         }
     }
 
@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.d("Error", "createUserWithEmail:success");
                                 Toast.makeText(LoginActivity.this, "Failed Registration: ", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                                startActivity(new Intent(LoginActivity.this, TabsActivity.class));
                             } else {
                                 // If sign in fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();

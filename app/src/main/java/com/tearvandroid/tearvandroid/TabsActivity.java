@@ -40,7 +40,7 @@ public class TabsActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_cars:
-                            selectedFragment = new CarsFragment();
+                            selectedFragment = new CarsInfoFragment();
                             break;
                     }
 

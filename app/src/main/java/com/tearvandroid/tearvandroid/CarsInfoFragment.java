@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CarsFragment extends Fragment {
+public class CarsInfoFragment extends Fragment {
 
     @Nullable
     @Override

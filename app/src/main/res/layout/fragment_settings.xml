@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/login_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/relative_layout">
+
+        <AutoCompleteTextView
+            android:id="@+id/email"
+            android:layout_width="197dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginLeft="119dp"
+            android:layout_marginTop="90dp"
+            android:ems="10"
+            android:hint="dummy@purdue.edu"
+            android:inputType="textEmailAddress" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/username"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="126dp"
+            android:layout_marginLeft="126dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="dummy"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/username_title"
+            android:layout_width="100dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="-16dp"
+            android:layout_marginRight="-16dp"
+            android:layout_toStartOf="@+id/view2"
+            android:layout_toLeftOf="@+id/view2"
+            android:fontFamily="serif-monospace"
+            android:text="@string/prompt_username"
+            android:textColor="@color/grey"
+            android:textFontWeight="4"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/email_title"
+            android:layout_width="100dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="95dp"
+            android:layout_marginEnd="-16dp"
+            android:layout_marginRight="-16dp"
+            android:layout_toStartOf="@+id/view2"
+            android:layout_toLeftOf="@+id/view2"
+            android:fontFamily="serif-monospace"
+            android:text="@string/prompt_email"
+            android:textColor="@color/grey"
+            android:textFontWeight="4"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/pass_title"
+            android:layout_width="100dp"
+            android:layout_height="42dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="187dp"
+            android:layout_marginEnd="-16dp"
+            android:layout_marginRight="-16dp"
+            android:layout_toStartOf="@+id/view2"
+            android:layout_toLeftOf="@+id/view2"
+            android:fontFamily="serif-monospace"
+            android:text="@string/prompt_password"
+            android:textColor="@color/grey"
+            android:textFontWeight="4"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="83dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/username"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="180dp"
+            android:text="Change Password" />
+
+    </RelativeLayout>
+
+</FrameLayout>
