@@ -35,8 +35,8 @@ public class TabsActivity extends AppCompatActivity {
                             selectedFragment = new AnalyticsFragment();
                             break;
 
-                        case R.id.nav_profile:
-                            selectedFragment = new ProfileFragment();
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
                             break;
 
                         case R.id.nav_cars:

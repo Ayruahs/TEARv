@@ -54,8 +54,6 @@
             android:layout_marginTop="37dp"
             android:layout_marginEnd="-16dp"
             android:layout_marginRight="-16dp"
-            android:layout_toStartOf="@+id/view2"
-            android:layout_toLeftOf="@+id/view2"
             android:fontFamily="serif-monospace"
             android:text="@string/prompt_username"
             android:textColor="@color/grey"
@@ -74,8 +72,6 @@
             android:layout_marginTop="95dp"
             android:layout_marginEnd="-16dp"
             android:layout_marginRight="-16dp"
-            android:layout_toStartOf="@+id/view2"
-            android:layout_toLeftOf="@+id/view2"
             android:fontFamily="serif-monospace"
             android:text="@string/prompt_email"
             android:textColor="@color/grey"
@@ -94,8 +90,6 @@
             android:layout_marginTop="187dp"
             android:layout_marginEnd="-16dp"
             android:layout_marginRight="-16dp"
-            android:layout_toStartOf="@+id/view2"
-            android:layout_toLeftOf="@+id/view2"
             android:fontFamily="serif-monospace"
             android:text="@string/prompt_password"
             android:textColor="@color/grey"
@@ -103,7 +97,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/save_button"
+            android:id="@+id/save_name_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -115,7 +109,7 @@
             android:text="Save" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/save_email_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -127,13 +121,15 @@
             android:text="Save" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/change_password_button"
             android:layout_width="161dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/username"
+            android:layout_alignEnd="@+id/email"
+            android:layout_alignRight="@+id/email"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="177dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:text="Change Password" />
 
     </RelativeLayout>
