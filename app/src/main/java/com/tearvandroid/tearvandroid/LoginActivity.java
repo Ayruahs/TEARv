@@ -206,9 +206,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            Intent intent = new Intent(LoginActivity.this, TabsActivity.class);
+            startActivity(intent);
         }
     }
-
+    
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
