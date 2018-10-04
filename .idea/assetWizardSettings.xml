@@ -19,8 +19,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_settings" />
-                            <entry key="sourceFile" value="C:\Purdue\CS307\Project\if_40-Gear_2123881.svg" />
+                            <entry key="height" value="48" />
+                            <entry key="outputName" value="ic_pencil" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Purdue\CS307\Project\if_15.Pencil_290135.svg" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>
