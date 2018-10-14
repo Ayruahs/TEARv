@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -32,7 +33,12 @@ public class AnalyticsFragment extends Fragment {
             series.appendData(new DataPoint(x, y), true, 500);
         }
 
+
         graphView.addSeries(series);
+        graphView.getGridLabelRenderer().setHorizontalAxisTitle("Time (sec)");
+        graphView.getGridLabelRenderer().setVerticalAxisTitle("Temperature (degree C)");
+        graphView.getGridLabelRenderer().setLabelVerticalWidth(70);
+        graphView.getGridLabelRenderer().setLabelHorizontalHeight(30);
 
         return view;
 
