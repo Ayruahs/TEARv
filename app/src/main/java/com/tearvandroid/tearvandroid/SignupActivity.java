@@ -111,6 +111,11 @@ public class SignupActivity extends AppCompatActivity {
                                 Log.d("Success", "createUserWithEmail:success");
                                 Toast.makeText(SignupActivity.this, "Signed in.", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                try {
+                                    user.sendEmailVerification();
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
                                 startActivity(new Intent(SignupActivity.this, TabsActivity.class));
                             } else {
                                 // If sign up fails, display a message to the user.
