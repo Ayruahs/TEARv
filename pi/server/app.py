@@ -1,24 +1,24 @@
 from flask import Flask
-import controls
+import ../controls
 
 app = Flask(__name__)
 
 
 @app.route('/api/moveForward')
 def move_forward():
-    
+    controls.forward(1)
 
 @app.route('/api/turnLeft')
 def turn_left():
-    pass
+    controls.pivotLeft(1)
 
 @app.route('/api/turnRight')
 def turn_right():
-    pass
+    controls.pivotRight(1)
 
 @app.route('/api/moveBackward')
 def move_backward():
-    pass
+    controls.reverse(1)
 
 
 if __name__ == "__main__":
