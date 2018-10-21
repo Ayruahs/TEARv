@@ -20,6 +20,10 @@ def turn_right():
 def move_backward():
     controls.reverse(1)
 
+@app.route('/api/getTemperatureData')
+def get_temperature():
+    pass
+
 
 if __name__ == "__main__":
     controls.init()
