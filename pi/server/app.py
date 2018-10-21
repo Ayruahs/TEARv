@@ -1,11 +1,12 @@
 from flask import Flask
+import controls
 
 app = Flask(__name__)
 
 
 @app.route('/api/moveForward')
 def move_forward():
-    pass
+    
 
 @app.route('/api/turnLeft')
 def turn_left():
@@ -21,4 +22,5 @@ def move_backward():
 
 
 if __name__ == "__main__":
+    controls.init()
     app.run(host='0.0.0.0', debug=True)
