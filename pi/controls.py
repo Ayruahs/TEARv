@@ -77,7 +77,7 @@ def backRight(sleepTime):
 
 def keyInput(event):
     init()
-    print 'Key: ', event.char
+    print ('Key: ', event.char)
     keyPress = event.char
     sleepTime = 0.030
 
