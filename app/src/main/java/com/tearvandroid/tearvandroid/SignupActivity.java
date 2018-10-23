@@ -8,17 +8,25 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.opencensus.tags.Tag;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -27,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         Button mCancelButton = (Button) findViewById(R.id.cancel_action);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +79,8 @@ public class SignupActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String email = mEmailView.getText().toString();
+        final String username = mUsernameView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -116,6 +126,38 @@ public class SignupActivity extends AppCompatActivity {
                                 } catch (NullPointerException e) {
                                     e.printStackTrace();
                                 }
+
+                                //store user info to database
+                                db.collection("users").add(email).addOnSuccessListener(
+                                        new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d("create", "new document " + email + "successfully created");
+                                            }
+                                        }
+                                );
+
+                                Map<String, Object> data = new HashMap<>();
+                                if (username.equals("") || username.length() == 0) {
+                                    data.put("username", "User");
+                                }
+                                else {
+                                    data.put("username", username);
+                                }
+                                db.collection("users").document(email).set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("upload", "DocumentSnapshot successfully written!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("upload", "Error writing document", e);
+                                            }
+                                        });
+
                                 startActivity(new Intent(SignupActivity.this, TabsActivity.class));
                             } else {
                                 // If sign up fails, display a message to the user.
