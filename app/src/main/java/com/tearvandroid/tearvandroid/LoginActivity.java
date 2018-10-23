@@ -112,6 +112,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         mLoginFormView = findViewById(R.id.login_window);
         mProgressView = findViewById(R.id.login_progress);
+        TextView mForgetPass = findViewById(R.id.forgot_password);
+        mForgetPass.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordRecover();
+            }
+        });
     }
 
     @Override
@@ -122,6 +129,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //Segue to main app
             startActivity(new Intent(LoginActivity.this, TabsActivity.class));
         }
+    }
+
+    public void passwordRecover(){
+        Intent intent = new Intent(this, ForgetpasswordActivity.class);
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {
