@@ -26,7 +26,6 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ForgetpasswordActivity" />
         <activity android:name=".TabsActivity" />
-        <activity android:name=".activity_addcar"></activity>
     </application>
 
 </manifest>
