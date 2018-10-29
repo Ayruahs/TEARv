@@ -1,5 +1,6 @@
 package com.tearvandroid.tearvandroid;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ public class HomeFragment extends Fragment {
     Button leftArrow;
     Button rightArrow;
     TextView textToChange;
+    TextView tempTextView;
+    TextView humidityTextView;
 
     @Nullable
     @Override
@@ -27,6 +30,17 @@ public class HomeFragment extends Fragment {
         leftArrow = (Button) view.findViewById(R.id.arrow_left);
         rightArrow = (Button) view.findViewById(R.id.arrow_right);
         textToChange = (TextView) view.findViewById(R.id.txt);
+        tempTextView = (TextView) view.findViewById(R.id.tempValue);
+        humidityTextView = (TextView) view.findViewById(R.id.humidityValue);
+
+        int tempValue = Integer.parseInt(tempTextView.getText().toString());
+        int humidityValue = Integer.parseInt(humidityTextView.getText().toString());
+
+        if (tempValue > 40) {
+            tempTextView.setTextColor(Color.RED);
+        } else {
+            tempTextView.setTextColor(Color.GREEN);
+        }
 
         upArrow.setOnClickListener(new View.OnClickListener() {
             @Override
