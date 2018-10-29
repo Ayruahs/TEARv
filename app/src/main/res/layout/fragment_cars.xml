@@ -119,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
+            android:tooltipText="@string/action_add_car"
             app:srcCompat="@drawable/ic_add" />
 
     </android.support.design.widget.CoordinatorLayout>

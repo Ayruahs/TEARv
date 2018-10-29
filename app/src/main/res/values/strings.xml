@@ -12,6 +12,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_sign_out">Sign out</string>
+    <string name="action_add_car">Add New TEARv</string>
     <string name="action_forget_password">Forget password?</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
