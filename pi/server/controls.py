@@ -10,6 +10,11 @@ def init():
     gpio.setup(11, gpio.OUT)
     gpio.setup(13, gpio.OUT)
     gpio.setup(15, gpio.OUT)
+    gpio.output(7, False)
+    gpio.output(11, False)
+    gpio.output(13, False)
+    gpio.output(15, False)
+    #gpio.cleanup()
 
 def forward(sleepTime):
     gpio.output(7, False)
@@ -77,7 +82,7 @@ def backRight(sleepTime):
 
 def keyInput(event):
     init()
-    print 'Key: ', event.char
+    print ('Key: ', event.char)
     keyPress = event.char
     sleepTime = 0.030
 
@@ -100,8 +105,8 @@ def keyInput(event):
     else:
         time.sleep(sleepTime)
         gpio.cleanup()
-
-command = tk.Tk()
-command.bind('<KeyPress>', keyInput)
-command.mainloop()
+if __name__ == "__main__":
+    command = tk.Tk()
+    command.bind('<KeyPress>', keyInput)
+    command.mainloop()
 

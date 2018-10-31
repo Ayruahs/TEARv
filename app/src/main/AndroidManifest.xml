@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +27,6 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ForgetpasswordActivity" />
         <activity android:name=".TabsActivity" />
-        <activity android:name=".activity_addcar"></activity>
     </application>
 
 </manifest>
