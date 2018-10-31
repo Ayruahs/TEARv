@@ -19,35 +19,38 @@ def main():
             os.makedirs(file)
             with open(file, 'a+') as file:
                 json.dump(data, file)
+            print 'file ' + file + 'created'
         else:
-            data = json.load(file, 'r')
-            count = data['count']
-            time = datetime.datetime.utcnow().isoformat()
-            humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
+            print file
+            with open(file) as json_file:
+                data = json.load(json_file, 'r')
+                count = data['count']
+                time = datetime.datetime.utcnow().isoformat()
+                humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 
-            if humidity is not None and temperature is not None:
-                count = count + 1
-                data['results'].append({
-                    'time': time,
-                    'temperature': round(temperature, 2),
-                    'humidity': round(humidity, 2),
-                    'device': 9,
-                    'id': count
-                })
+                if humidity is not None and temperature is not None:
+                    count = count + 1
+                    data['results'].append({
+                        'time': time,
+                        'temperature': round(temperature, 2),
+                        'humidity': round(humidity, 2),
+                        'device': 9,
+                        'id': count
+                    })
 
-            else:
-                print('Failed to get reading. Try again!')
-                error = {}
-                error['tempSensor'] = 'error'
-                error['timestamp'] = time
+                else:
+                    print('Failed to get reading. Try again!')
+                    error = {}
+                    error['tempSensor'] = 'error'
+                    error['timestamp'] = time
 
-                with open('./sensor_data/error_log', 'w+') as error_log:
-                    json.dump(error, error_log)
+                    with open('./sensor_data/error_log', 'w+') as error_log:
+                        json.dump(error, error_log)
 
-            with open(file, 'a+') as file:
-                json.dump(data, file)
+                with open(file, 'a+') as file:
+                    json.dump(data, file)
 
-            time.sleep(5)
+                time.sleep(5)
 
 
 
