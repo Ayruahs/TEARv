@@ -24,7 +24,7 @@ def main():
             print file
             with open(file) as json_file:
                 try:
-                    data = json.load(json_file, 'r')
+                    data = json.load(json_file)
                 except ValueError:
                     count = 0
                     data = {}
