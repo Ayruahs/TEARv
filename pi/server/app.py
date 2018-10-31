@@ -90,7 +90,7 @@ def backRight():
 
 @app.route('/api/getSensorData')
 def get_sensor_data():
-    print 'temp: '
+    print ("temp: ")
     #send result back
     #
     now = datetime.datetime.now()
@@ -100,7 +100,7 @@ def get_sensor_data():
 
 @app.route('/api/test')
 def test():
-    print "Pi accessible"
+    print ("Pi accessible")
 
 def init():
     gpio.setmode(gpio.BOARD)

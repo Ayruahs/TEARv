@@ -9,8 +9,7 @@ import Tkinter as tk
 
 def run(day, start, end):
     now = datetime.datetime.now()
-    file = path('/sensor_data/' + now.year + now.month + now.day + '/' +
-                now.year + '-' + now.month + '-' + now.day)
+    file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
 
     if not file.isfile():
     #return no data

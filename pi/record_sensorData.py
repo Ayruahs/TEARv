@@ -5,6 +5,7 @@ import datetime
 import Adafruit_DHT
 import pytz
 import json
+import os
 import statistics
 import io
 import uuid
@@ -14,8 +15,7 @@ TZ = pytz.timezone("America/New_York")
 def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
-    file = path('/sensor_data/' + now.year + now.month + now.day + '/' +
-                now.year + '-' + now.month + '-' + now.day)
+    file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
 
     if not file.isfile():
         data = {}
