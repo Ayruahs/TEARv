@@ -59,7 +59,7 @@ def main():
                 with open(file, 'a+') as file:
                     json.dump(data, file)
 
-                time.sleep(5)
+            time.sleep(5)
 
 
 
