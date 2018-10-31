@@ -1,5 +1,5 @@
 # Built for Purdue Air Sense Project translated to TEARv (CS 30700 - Team 36)
-
+import time
 import datetime
 import Adafruit_DHT
 import pytz
@@ -30,6 +30,7 @@ def main():
                     data = {}
                     data['results'] = []
                     data['count'] = 0
+                    print 'json is empty'
                 count = data['count']
                 time = datetime.datetime.utcnow().isoformat()
                 humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
@@ -52,6 +53,8 @@ def main():
 
                     with open('./sensor_data/error_log', 'w+') as error_log:
                         json.dump(error, error_log)
+
+                print 'finished json'
 
                 with open(file, 'a+') as file:
                     json.dump(data, file)
