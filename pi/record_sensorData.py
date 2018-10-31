@@ -1,14 +1,10 @@
 # Built for Purdue Air Sense Project translated to TEARv (CS 30700 - Team 36)
 
-import time
 import datetime
 import Adafruit_DHT
 import pytz
 import json
 import os
-import statistics
-import io
-import uuid
 
 TZ = pytz.timezone("America/New_York")
 
@@ -17,16 +13,15 @@ def main():
     now = datetime.datetime.now()
     file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
 
-    if not os.path.isfile(file):
-        data = {}
-        data['results'] = []
-        data['count'] = 0
-        count = 0
-    else:
-        data = json.load(file, 'r')
-        count = data['count']
-
-        while True:
+    while True:
+        if not os.path.isfile(file):
+            data = {}
+            data['results'] = []
+            data['count'] = 0
+            count = 0
+        else:
+            data = json.load(file, 'r')
+            count = data['count']
             time = datetime.datetime.utcnow().isoformat()
             humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 

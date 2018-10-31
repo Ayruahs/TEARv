@@ -1,9 +1,10 @@
 import time
 import sys
+import datetime
 import json
 import numpy
-import Adafruit_DHT
-import Tkinter as tk
+import io
+import os
 
 # Get sensors' data from Pi and send it to the app
 
