@@ -17,7 +17,7 @@ def main():
     now = datetime.datetime.now()
     file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
 
-    if not file.isfile():
+    if not os.path.isfile(file):
         data = {}
         data['results'] = []
         data['count'] = 0

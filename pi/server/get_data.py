@@ -15,8 +15,8 @@ def run(day, start, end):
     #return no data
     else:
         #check if there is reading error
-        errorfile = path(file+'/error_log')
-        if errorfile.isfile():
+        errorfile = file+'/error_log'
+        if os.path.isfile(errorfile):
             error = json.load(errorfile, 'r')
             time = error['tempSensor']['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
