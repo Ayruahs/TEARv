@@ -1,22 +1,20 @@
-import time
 import sys
 import datetime
 import json
-import numpy
-import io
 import os
 
 # Get sensors' data from Pi and send it to the app
 
 def run(day, start, end):
     now = datetime.datetime.now()
-    file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
+    file = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
-    if not file.isfile():
-    #return no data
+    if not os.path.isfile(file):
+        #return no data
+        return -1
     else:
         #check if there is reading error
-        errorfile = file+'/error_log'
+        errorfile = './sensor_data/error_log'
         if os.path.isfile(errorfile):
             error = json.load(errorfile, 'r')
             time = error['tempSensor']['time']
@@ -24,6 +22,7 @@ def run(day, start, end):
                 return -1
             else:
                 # delete error file
+                os.remove(errorfile)
 
         data = json.load(file, 'r')
         count = data['count']

@@ -11,14 +11,14 @@ TZ = pytz.timezone("America/New_York")
 def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
-    file = '/sensor_data/' + now.year + now.month + now.day + '/' + now.year + '-' + now.month + '-' + now.day
+    file = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
     while True:
         if not os.path.isfile(file):
-            data = {}
-            data['results'] = []
-            data['count'] = 0
-            count = 0
+            data = {'results': [], 'count': 0}
+            os.makedirs(file)
+            with open(file, 'a+') as file:
+                json.dump(data, file)
         else:
             data = json.load(file, 'r')
             count = data['count']
@@ -41,7 +41,7 @@ def main():
                 error['tempSensor'] = 'error'
                 error['timestamp'] = time
 
-                with open(file+'/error_log', 'a+') as error_log:
+                with open('./sensor_data/error_log', 'w+') as error_log:
                     json.dump(error, error_log)
 
             with open(file, 'a+') as file:
