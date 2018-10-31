@@ -23,7 +23,13 @@ def main():
         else:
             print file
             with open(file) as json_file:
-                data = json.load(json_file, 'r')
+                try:
+                    data = json.load(json_file, 'r')
+                except ValueError:
+                    count = 0
+                    data = {}
+                    data['results'] = []
+                    data['count'] = 0
                 count = data['count']
                 time = datetime.datetime.utcnow().isoformat()
                 humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
