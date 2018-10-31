@@ -2,8 +2,11 @@ package com.tearvandroid.tearvandroid;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +36,64 @@ public class HomeFragment extends Fragment {
         tempTextView = (TextView) view.findViewById(R.id.tempValue);
         humidityTextView = (TextView) view.findViewById(R.id.humidityValue);
 
-        int tempValue = Integer.parseInt(tempTextView.getText().toString());
-        int humidityValue = Integer.parseInt(humidityTextView.getText().toString());
+        // the commented code below is the test to check if the temperature color changes if the value changes
 
-        if (tempValue > 40) {
-            tempTextView.setTextColor(Color.RED);
-        } else {
-            tempTextView.setTextColor(Color.GREEN);
-        }
+        new CountDownTimer(30000, 1000){
+            public void onTick(long millisUntilFinished) {
+                tempTextView.setText(""+(millisUntilFinished/1000 + 25));
+                humidityTextView.setText("" + (millisUntilFinished/1000 + 70));
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+                tempTextView.setText("40");
+            }
+        }.start();
+
+        tempTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int tempValue = Integer.parseInt(tempTextView.getText().toString());
+
+                if (tempValue > 40) {
+                    tempTextView.setTextColor(Color.RED);
+                } else {
+                    tempTextView.setTextColor(Color.GREEN);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        humidityTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int humidityValue = Integer.parseInt(humidityTextView.getText().toString());
+                if (humidityValue > 80) {
+                    humidityTextView.setTextColor(Color.RED);
+                } else {
+                    humidityTextView.setTextColor(Color.GREEN);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         upArrow.setOnClickListener(new View.OnClickListener() {
             @Override
