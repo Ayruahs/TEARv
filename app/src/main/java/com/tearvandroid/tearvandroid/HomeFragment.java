@@ -33,6 +33,13 @@ import android.util.DisplayMetrics;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -101,6 +108,29 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 textToChange.setText("Moved Up");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveForward";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
             }
         });
 
@@ -108,6 +138,29 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 textToChange.setText("Moved Down");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveBackward";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
             }
         });
 
@@ -115,6 +168,29 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 textToChange.setText("Moved Left");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/turnLeft";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
             }
         });
 
@@ -122,6 +198,29 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 textToChange.setText("Moved Right");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/turnRight";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
             }
         });
 
