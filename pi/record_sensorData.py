@@ -20,17 +20,17 @@ def main():
             try:
                 data = json.load(json_file)
             except ValueError:
-                print data
                 data['results'] = []
                 data['count'] = 0
                 print 'decode error'
-
+            print data
+            
             if data.get("results") == "":
                 print 'json is empty'
                 count = 0
             else:
                 count = data['count']
-                
+
         time1 = datetime.datetime.utcnow().isoformat()
         humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 
