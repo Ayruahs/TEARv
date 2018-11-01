@@ -17,12 +17,12 @@ def main():
         if not os.path.isfile(file):
             data = {'results': [], 'count': 0}
             os.makedirs(file)
-            with open(file, 'a+') as file:
+            with open(file, 'a+') as json_file:
                 json.dump(data, file)
             print 'file ' + file + 'created'
         else:
             print file
-            with open(file) as json_file:
+            with open(file, 'a+') as json_file:
                 try:
                     data = json.load(json_file)
                 except ValueError:
@@ -51,13 +51,13 @@ def main():
                     error['tempSensor'] = 'error'
                     error['timestamp'] = time
 
-                    with open('./sensor_data/error_log', 'w+') as error_log:
-                        json.dump(error, error_log)
+                    #with open('./sensor_data/error_log', 'w+') as error_log:
+                    json.dump(error, json_file)
 
                 print 'finished json'
 
-                with open(file, 'a+') as file:
-                    json.dump(data, file)
+                #with open(file, 'a+') as file:
+                json.dump(data, json_file)
 
             time.sleep(5)
 
