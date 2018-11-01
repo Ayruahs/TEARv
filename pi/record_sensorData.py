@@ -14,7 +14,7 @@ def main():
     ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
     while True:
-        if not os.path.isffile(ffile):
+        if not os.path.isfile(ffile):
             data = {'results': [], 'count': 0}
             os.makedirs(ffile)
             with open(ffile, 'a+') as json_ffile:
