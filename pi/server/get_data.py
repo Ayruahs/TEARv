@@ -7,19 +7,22 @@ import os
 
 def run(day, start, end):
     now = datetime.datetime.now()
-    ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
-    countFile = open("./sensor_data/count.txt", "w+")
-    count= countFile.readline()
-    if count == "":
+    ffile = 'cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+
+    if os.path.isfile("cs307/TEARv/pi/sensor_data/count.txt"):
+        countFile = open("cs307/TEARv/pi/sensor_data/count.txt", "r")
+        count= countFile.readline()
+        if len(count) == 0:
+            return 0
+    else:
         return 0
 
-
     #check if there is reading error
-    errorfile = './sensor_data/error_log'
+    errorfile = 'cs307/TEARv/pi/sensor_data/sensor_data/error_log'
     try:
         with open(errorfile) as f:
-            error = json.load(errorfile, 'r')
-            time = error['tempSensor']['time']
+            error = json.load(f)
+            time = error['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
                 return -1
             else:
@@ -29,11 +32,18 @@ def run(day, start, end):
 
     data = {{'results':[], 'count': count}}
 
-    with open(ffile):
-        results = json.load(ffile, 'r')
+    with open(ffile) as f1:
+        results = json.load(f1, 'r')
 
-    for i in range(200):
-        #format json string to return
+    if count > 200:
+        for i in range(200):
+            #format json string to return
+            data['results'].append(results[count - i])
 
-    return
+    else:
+        for i in range(count):
+            data['results'].append(results[i])
+
+        print data
+    return data
 
