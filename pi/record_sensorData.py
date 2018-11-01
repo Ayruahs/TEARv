@@ -11,20 +11,20 @@ TZ = pytz.timezone("America/New_York")
 def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
-    file = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
     while True:
-        if not os.path.isfile(file):
+        if not os.path.isffile(ffile):
             data = {'results': [], 'count': 0}
-            os.makedirs(file)
-            with open(file, 'a+') as json_file:
-                json.dump(data, file)
-            print 'file ' + file + 'created'
+            os.makedirs(ffile)
+            with open(ffile, 'a+') as json_ffile:
+                json.dump(data, ffile)
+            print 'ffile ' + ffile + 'created'
         else:
-            print file
-            with open(file, 'a+') as json_file:
+            print ffile
+            with open(ffile, 'a+') as json_ffile:
                 try:
-                    data = json.load(json_file)
+                    data = json.load(json_ffile)
                 except ValueError:
                     count = 0
                     data = {}
@@ -32,32 +32,33 @@ def main():
                     data['count'] = 0
                     print 'json is empty'
                 count = data['count']
-                time = datetime.datetime.utcnow().isoformat()
+                time1 = datetime.datetime.utcnow().isoformat()
                 humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 
                 if humidity is not None and temperature is not None:
                     count = count + 1
-                    data['results'].append({
-                        'time': time,
+                    data['results'].append({count:{
+                        'time': time1,
                         'temperature': round(temperature, 2),
                         'humidity': round(humidity, 2),
                         'device': 9,
                         'id': count
-                    })
+                    }})
+                    data['count'] = count
 
                 else:
                     print('Failed to get reading. Try again!')
                     error = {}
                     error['tempSensor'] = 'error'
-                    error['timestamp'] = time
+                    error['timestamp'] = time1
 
                     #with open('./sensor_data/error_log', 'w+') as error_log:
-                    json.dump(error, json_file)
+                    json.dump(error, json_ffile)
 
                 print 'finished json'
 
-                #with open(file, 'a+') as file:
-                json.dump(data, json_file)
+                #with open(ffile, 'a+') as ffile:
+                json.dump(data, json_ffile)
 
             time.sleep(5)
 
