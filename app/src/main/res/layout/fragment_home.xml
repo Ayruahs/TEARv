@@ -103,14 +103,16 @@
         android:textColor="@android:color/holo_green_dark"
         android:textSize="25dp" />
 
-    <Button
-        android:id="@+id/button3"
+    <ToggleButton
+        android:id="@+id/record_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="65dp"
+        android:textOn="STOP"
+        android:textOff="REC"
         android:background="@drawable/record_button" />
 
 </RelativeLayout>
