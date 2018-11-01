@@ -20,11 +20,12 @@ def main():
             try:
                 data = json.load(json_file)
             except ValueError:
+                data = {}
                 data['results'] = []
                 data['count'] = 0
                 print 'decode error'
             print data
-            
+
             if data.get("results") == "":
                 print 'json is empty'
                 count = 0
