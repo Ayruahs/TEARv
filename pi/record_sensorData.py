@@ -13,17 +13,21 @@ def main():
     now = datetime.datetime.now()
     ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
+    countFile = open("./sensor_data/count.txt", "w+")
+    count= countFile.readline()
+    if count == "":
+        count = 0
+    else:
+        count = int(count)
+    print 'before collecting'
+    print count
 
     while True:
         print 'file'
         print ffile
         
-        
-        
-        
         time1 = datetime.datetime.utcnow().isoformat()
         humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
-        print 'before if'
         
         if humidity is not None and temperature is not None:
             print 'collecting'
@@ -43,7 +47,6 @@ def main():
                 json.dump(data, json_file)
 
             countFile.write(str(count))
-            countFile.close()
 
         else:
             print('Failed to get reading. Try again!')
@@ -58,7 +61,7 @@ def main():
         time.sleep(5)
 
     print 'error'
-
+    countFile.close()
 
 if __name__ == "__main__":
     main()
