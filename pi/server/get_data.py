@@ -7,15 +7,17 @@ import os
 
 def run(day, start, end):
     now = datetime.datetime.now()
-    file = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    countFile = open("./sensor_data/count.txt", "w+")
+    count= countFile.readline()
+    if count == "":
+        return 0
 
-    if not os.path.isfile(file):
-        #return no data
-        return -1
-    else:
-        #check if there is reading error
-        errorfile = './sensor_data/error_log'
-        if os.path.isfile(errorfile):
+
+    #check if there is reading error
+    errorfile = './sensor_data/error_log'
+    try:
+        with open(errorfile) as f:
             error = json.load(errorfile, 'r')
             time = error['tempSensor']['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
@@ -23,12 +25,15 @@ def run(day, start, end):
             else:
                 # delete error file
                 os.remove(errorfile)
+    except IOError:
 
-        data = json.load(file, 'r')
-        count = data['count']
+    data = {{'results':[], 'count': count}}
 
-        for i in range(200):
-            #format json string to return
+    with open(ffile):
+        results = json.load(ffile, 'r')
+
+    for i in range(200):
+        #format json string to return
 
     return
 
