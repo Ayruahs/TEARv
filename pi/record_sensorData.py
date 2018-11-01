@@ -17,6 +17,8 @@ def main():
     count= countFile.readline()
     if count == "":
         count = 0
+    else:
+        count = int(count)
 
     while True:
         print ffile
@@ -37,8 +39,7 @@ def main():
                 with open(ffile, 'a+') as json_file:
                     json.dump(data, json_file)
 
-                countFile.write(count)
-                countFile.close()
+                countFile.write(str(count))
 
         else:
             print('Failed to get reading. Try again!')
@@ -53,7 +54,7 @@ def main():
         time.sleep(5)
 
     print 'error'
-
+    countFile.close()
 
 if __name__ == "__main__":
     main()
