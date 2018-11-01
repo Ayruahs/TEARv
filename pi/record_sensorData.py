@@ -19,10 +19,7 @@ def main():
             try:
                 data = json.load(json_file)
             except ValueError:
-                count = 0
-                data = {}
-                data['results'] = []
-                data['count'] = 0
+                data = {'results':[], 'count':0}
                 print 'json is empty'
             count = data['count']
             time1 = datetime.datetime.utcnow().isoformat()
@@ -46,11 +43,12 @@ def main():
                 error['timestamp'] = time1
 
                 #with open('./sensor_data/error_log', 'w+') as error_log:
-                json.dump(error, json_ffile)
+                json.dump(error, json_file)
 
             print 'finished json'
 
-            json.dump(data, json_ffile)
+
+            json.dump(data, json_file)
 
         time.sleep(5)
 
