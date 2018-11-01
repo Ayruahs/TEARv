@@ -15,17 +15,17 @@ def main():
 
     while True:
         print ffile
-        with open(ffile, 'a+') as json_file:
-            try:
-                data = json.load(json_file)
-            except ValueError:
+
+        with open(ffile) as json_file:
+            data = json.load(json_file)
+            if data.get("results") == "":
                 data = {'results':[], 'count':0}
                 print 'json is empty'
             count = data['count']
-            time1 = datetime.datetime.utcnow().isoformat()
-            humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
+        time1 = datetime.datetime.utcnow().isoformat()
+        humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 
-            if humidity is not None and temperature is not None:
+        if humidity is not None and temperature is not None:
                 count = count + 1
                 data['results'].append({count:{
                     'time': time1,
@@ -34,20 +34,19 @@ def main():
                     'device': 9,
                     'id': count
                 }})
-                data['count'] = count
 
-            else:
-                print('Failed to get reading. Try again!')
-                error = {}
-                error['tempSensor'] = 'error'
-                error['timestamp'] = time1
+        else:
+            print('Failed to get reading. Try again!')
+            error = {}
+            error['tempSensor'] = 'error'
+            error['timestamp'] = time1
 
-                #with open('./sensor_data/error_log', 'w+') as error_log:
-                json.dump(error, json_file)
+            #with open('./sensor_data/error_log', 'w+') as error_log:
+            json.dump(error, json_file)
 
-            print 'finished json'
-
-
+        print 'finished json'
+        data['count'] = count
+        with open(ffile, 'a+') as json_file:
             json.dump(data, json_file)
 
         time.sleep(5)
