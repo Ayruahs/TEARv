@@ -21,7 +21,7 @@ def main():
         count = int(count)
     print 'before collecting'
     print count
-
+    
     while True:
         print 'file'
         print ffile
@@ -31,6 +31,7 @@ def main():
         
         if humidity is not None and temperature is not None:
             print 'collecting'
+            countFile = open("./sensor_data/count.txt", "w+")
 
             count = count + 1
             print count
@@ -47,6 +48,7 @@ def main():
                 json.dump(data, json_file)
 
             countFile.write(str(count))
+            countFile.close()
 
         else:
             print('Failed to get reading. Try again!')
