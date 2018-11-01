@@ -17,12 +17,20 @@ def main():
         print ffile
 
         with open(ffile, 'a+') as json_file:
-            data = json.load(json_file)
+            try:
+                data = json.load(json_file)
+            except ValueError:
+                print data
+                data['results'] = []
+                data['count'] = 0
+                print 'decode error'
+
             if data.get("results") == "":
                 print 'json is empty'
                 count = 0
             else:
                 count = data['count']
+                
         time1 = datetime.datetime.utcnow().isoformat()
         humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
 
