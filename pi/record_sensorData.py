@@ -13,20 +13,20 @@ def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
     ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
-
-    countFile = open("./sensor_data/count.txt", "w+")
-    count= countFile.readline()
-    if count == "":
-        count = 0
-    else:
+    
+    if os.path.exists("./sensor_data/count.txt"):
+        countFile = open("./sensor_data/count.txt", "r")
+        count = countFile.readline()
         count = int(count)
+    else:
+        count = 0
+        countFile = open("./sensor_data/count.txt", "w+")
+    countFile.close()
+        
     print 'before collecting'
     print count
     
     while True:
-        print 'file'
-        print ffile
-        
         counter = 0
         humidity1 = [0, 0, 0, 0]
         temperature1 = [0, 0, 0, 0]
@@ -53,7 +53,6 @@ def main():
                 'device': 9,
                 'id': count
             })
-            print data
             with open(ffile, 'a+') as json_file:
                 json.dump(data, json_file)
 
@@ -68,9 +67,7 @@ def main():
                 json.dump(error, error_log)
             break
 
-        print 'finished json'
-
-        time.sleep(5)
+        time.sleep(1)
 
     print 'error'
     countFile.close()
