@@ -38,18 +38,19 @@ public class HomeFragment extends Fragment {
 
         // the commented code below is the test to check if the temperature color changes if the value changes
 
-        new CountDownTimer(30000, 1000){
-            public void onTick(long millisUntilFinished) {
-                tempTextView.setText(""+(millisUntilFinished/1000 + 25));
-                humidityTextView.setText("" + (millisUntilFinished/1000 + 70));
-                //here you can have your logic to set text to edittext
-            }
+//        new CountDownTimer(30000, 1000){
+//            public void onTick(long millisUntilFinished) {
+//                tempTextView.setText(""+(millisUntilFinished/1000 + 25));
+//                humidityTextView.setText("" + (millisUntilFinished/1000 + 70));
+//                //here you can have your logic to set text to edittext
+//            }
+//
+//            public void onFinish() {
+//                tempTextView.setText("40");
+//            }
+//        }.start();
 
-            public void onFinish() {
-                tempTextView.setText("40");
-            }
-        }.start();
-
+        // Listener for when there is a change in the temp value
         tempTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Listener for when there is a change in the humidity value
         humidityTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
