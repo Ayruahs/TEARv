@@ -1,6 +1,7 @@
 # Built for Purdue Air Sense Project translated to TEARv (CS 30700 - Team 36)
 import time
 import datetime
+import statistics
 import Adafruit_DHT
 import pytz
 import json
@@ -26,8 +27,17 @@ def main():
         print 'file'
         print ffile
         
+        counter = 0
+        humidity1 = [0, 0, 0, 0]
+        temperature1 = [0, 0, 0, 0]
+        
+        while (counter < 4):
+            humidity1[counter], temperature1[counter] = Adafruit_DHT.read_retry(sensor, 9) 
+            if humidity1[counter] is not None and temperature1[counter] is not None:
+                counter = counter + 1
+            
+        temperature, humidity = statistics.median(temperature1),statistics.median(humidity1)    
         time1 = datetime.datetime.utcnow().isoformat()
-        humidity, temperature = Adafruit_DHT.read_retry(sensor, 9)
         
         if humidity is not None and temperature is not None:
             print 'collecting'
