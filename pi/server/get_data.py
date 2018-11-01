@@ -29,21 +29,22 @@ def run(day, start, end):
                 # delete error file
                 os.remove(errorfile)
     except IOError:
+        pass
+    data = {{'results':[], 'count': count}}
+    print data
 
-        data = {{'results':[], 'count': count}}
+    with open(ffile) as f1:
+        results = json.load(f1, 'r')
 
-        with open(ffile) as f1:
-            results = json.load(f1, 'r')
+    if count > 200:
+        for i in range(200):
+            #format json string to return
+            data['results'].append(results[count - i])
 
-        if count > 200:
-            for i in range(200):
-                #format json string to return
-                data['results'].append(results[count - i])
+    else:
+        for i in range(count):
+            data['results'].append(results[i])
 
-        else:
-            for i in range(count):
-                data['results'].append(results[i])
-
-            print data
-        return data
+    print data
+    return data
 
