@@ -5,7 +5,7 @@ import RPi.GPIO as gpio
 
 app = Flask(__name__)
 
-@app.route('/api/moveForward')
+@app.route('/api/moveForward', methods=['GET'])
 def move_forward():
     init()
     gpio.output(7, False)
@@ -15,7 +15,7 @@ def move_forward():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/turnLeft')
+@app.route('/api/turnLeft', methods=['GET'])
 def turn_left():
     init()
     gpio.output(7, True)
@@ -25,7 +25,7 @@ def turn_left():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/turnRight')
+@app.route('/api/turnRight', methods=['GET'])
 def turn_right():
     init()
     gpio.output(7, False)
@@ -35,7 +35,7 @@ def turn_right():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/moveBackward')
+@app.route('/api/moveBackward', methods=['GET'])
 def move_backward():
     init()
     gpio.output(7, True)
@@ -45,7 +45,7 @@ def move_backward():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/moveUpRight')
+@app.route('/api/moveUpRight', methods=['GET'])
 def upRight():
     init()
     gpio.output(7, False)
@@ -55,7 +55,7 @@ def upRight():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/moveUpLeft')
+@app.route('/api/moveUpLeft', methods=['GET'])
 def upLeft():
     init()
     gpio.output(7, True)
@@ -65,7 +65,7 @@ def upLeft():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/moveBackLeft')
+@app.route('/api/moveBackLeft', methods=['GET'])
 def backLeft():
     init()
     gpio.output(7, True)
@@ -75,7 +75,7 @@ def backLeft():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/moveBackRight')
+@app.route('/api/moveBackRight', methods=['GET'])
 def backRight():
     init()
     gpio.output(7, True)
@@ -85,9 +85,11 @@ def backRight():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/getTemperatureData')
+@app.route('/api/getTemperatureData', methods=['GET'])
 def get_temperature():
+    
     pass
+
 @app.route('/api/test')
 def test():
     print "Pi accessible"
@@ -107,4 +109,4 @@ def init():
 if __name__ == "__main__":
 #    controls.init()
     
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0", port=8000)
