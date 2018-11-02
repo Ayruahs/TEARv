@@ -48,7 +48,7 @@ def run(requestId):
     print data
 
     with open(ffile) as f1:
-        results = json.load(f1, 'r')
+        results = json.load(f1)
 
     if count > 200:
         for i in range(200):
