@@ -54,3 +54,7 @@ def run(day, start, end):
     print data
     return data
 
+
+if __name__ == "__main__":
+    main()
+
