@@ -74,6 +74,10 @@ public class HomeFragment extends Fragment {
     Button downArrow;
     Button leftArrow;
     Button rightArrow;
+    Button upRightArrow;
+    Button upLeftArrow;
+    Button downRightArrow;
+    Button downLeftArrow;
     Button recordButton;
     TextView textToChange;
     private boolean isRecording;
@@ -90,6 +94,10 @@ public class HomeFragment extends Fragment {
 //        recordButton = (Button) view.findViewById(R.id.record_button);
         mToggleButton = (ToggleButton) view.findViewById(R.id.record_button);
         textToChange = (TextView) view.findViewById(R.id.txt);
+        upRightArrow = (Button) view.findViewById(R.id.arrow_up_right);
+        upLeftArrow = (Button) view.findViewById(R.id.arrow_up_left);
+        downLeftArrow = (Button) view.findViewById(R.id.arrow_down_left);
+        downRightArrow = (Button) view.findViewById(R.id.arrow_down_right);
 
         isRecording = false;
 
@@ -216,6 +224,126 @@ public class HomeFragment extends Fragment {
                         error.printStackTrace();
                         error.toString();
                         textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        upRightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToChange.setText("Moved Up Right");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveUpRight";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        downRightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToChange.setText("Moved Back Right");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveBackRight";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        upLeftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToChange.setText("Moved Up Left");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveUpLeft";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        downLeftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToChange.setText("Moved Back Left");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/moveBackLeft";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
                     }
                 });
 
