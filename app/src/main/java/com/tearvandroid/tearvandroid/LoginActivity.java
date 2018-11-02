@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -112,6 +111,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         mLoginFormView = findViewById(R.id.login_window);
         mProgressView = findViewById(R.id.login_progress);
+        TextView mForgetPass = findViewById(R.id.forgot_password);
+        mForgetPass.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordRecover();
+            }
+        });
     }
 
     @Override
@@ -122,6 +128,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //Segue to main app
             startActivity(new Intent(LoginActivity.this, TabsActivity.class));
         }
+    }
+
+    public void passwordRecover(){
+        Intent intent = new Intent(this, ForgetpasswordActivity.class);
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {
@@ -235,9 +246,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Toast.makeText(LoginActivity.this, "Signed in. ", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                showProgress(false);
+                                if (!user.isEmailVerified()) {
+                                    mAuth.signOut();
+                                    showProgress(false);
+                                    Toast.makeText(LoginActivity.this, "Please verify your email!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                }
+                                else {
+                                    showProgress(false);
+                                    startActivity(new Intent(LoginActivity.this, TabsActivity.class));
+                                }
 
-                                startActivity(new Intent(LoginActivity.this, TabsActivity.class));
                             } else {
                                 // If sign in fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();

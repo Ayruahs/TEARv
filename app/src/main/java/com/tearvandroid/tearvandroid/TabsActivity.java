@@ -34,15 +34,18 @@ public class TabsActivity extends AppCompatActivity {
 
 
                         case R.id.nav_analytics:
+                            System.out.println("analynsis tab clicked.");
                             selectedFragment = new AnalyticsFragment();
                             break;
 
 
                         case R.id.nav_cars:
+                            System.out.println("car tab clicked.");
                             selectedFragment = new CarsInfoFragment();
                             break;
 
                         case R.id.nav_settings:
+                            System.out.println("settings tab clicked.");
                             selectedFragment = new SettingsFragment();
                             break;
 

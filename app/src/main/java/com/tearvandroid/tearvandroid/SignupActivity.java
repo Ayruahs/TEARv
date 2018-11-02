@@ -8,17 +8,26 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.opencensus.tags.Tag;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -27,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         Button mCancelButton = (Button) findViewById(R.id.cancel_action);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -69,15 +80,27 @@ public class SignupActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
-        String email = mEmailView.getText().toString();
+        final String username = mUsernameView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        //TODO: firebase regiter and data upload
         // Check for a valid email address.
+        final ActionCodeSettings actionCodeSettings =
+                ActionCodeSettings.newBuilder()
+                        // URL you want to redirect back to. The domain (www.example.com) for this
+                        // URL must be whitelisted in the Firebase Console.
+                        .setUrl("https://tearv4emailverify.page.link")
+                        // This must be true
+                        .setHandleCodeInApp(true)
+                        .setAndroidPackageName(
+                                "com.tearvandroid",
+                                true, /* installIfNotAvailable */
+                                "26"    /* minimumVersion */)
+                        .build();
+
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -102,6 +125,18 @@ public class SignupActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);
+
+            mAuth.sendSignInLinkToEmail(email, actionCodeSettings)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("sending email verification: " + email);
+                                Log.d("Success", "Email sent.");
+                            }
+                        }
+                    });
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -109,14 +144,39 @@ public class SignupActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign up success, update UI with the signed-in user's information
                                 Log.d("Success", "createUserWithEmail:success");
-                                Toast.makeText(SignupActivity.this, "Signed in.", Toast.LENGTH_SHORT).show();
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                try {
-                                    user.sendEmailVerification();
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
+                                Toast.makeText(SignupActivity.this, "Signed up. Please verify your email.", Toast.LENGTH_SHORT).show();
+
+                                //store user info to database
+                                db.collection("users").add(email).addOnSuccessListener(
+                                        new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d("create", "new document " + email + "successfully created");
+                                            }
+                                        }
+                                );
+
+                                Map<String, Object> data = new HashMap<>();
+                                if (username.equals("") || username.length() == 0) {
+                                    data.put("username", "User");
                                 }
-                                startActivity(new Intent(SignupActivity.this, TabsActivity.class));
+                                else {
+                                    data.put("username", username);
+                                }
+                                db.collection("users").document(email).set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("upload", "DocumentSnapshot successfully written!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("upload", "Error writing document", e);
+                                            }
+                                        });
+
                             } else {
                                 // If sign up fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();
@@ -126,6 +186,22 @@ public class SignupActivity extends AppCompatActivity {
 
                             // ...
                         }
+
+
+                    });
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseUser user = auth.getCurrentUser();
+
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("email sent");
+                                Log.d("success", "Email sent.");
+                            }
+                        }
                     });
         }
     }
@@ -133,5 +209,35 @@ public class SignupActivity extends AppCompatActivity {
     private boolean isEmailValid(String email) {
         //TODO: Replace this with firebase email validation
         return email.contains("@");
+    }
+
+    private void sendVerificationEmail()
+    {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+                            System.out.println("email sent");
+
+                            // after email is sent just logout the user and finish this activity
+                            startActivity(new Intent(SignupActivity.this, TabsActivity.class));
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+                            System.out.println("failed to send email");
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+
+                        }
+                    }
+                });
     }
 }
