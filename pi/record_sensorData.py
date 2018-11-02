@@ -12,15 +12,15 @@ TZ = pytz.timezone("America/New_York")
 def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
-    ffile = './sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
     
-    if os.path.exists("./sensor_data/count.txt"):
-        countFile = open("./sensor_data/count.txt", "r")
+    if os.path.exists("/home/pi/cs307/TEARv/pi/sensor_data/count.txt"):
+        countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "r")
         count = countFile.readline()
         count = int(count)
     else:
         count = 0
-        countFile = open("./sensor_data/count.txt", "w+")
+        countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "w+")
     countFile.close()
         
     print 'before collecting'
@@ -41,7 +41,7 @@ def main():
         
         if humidity is not None and temperature is not None:
             print 'collecting'
-            countFile = open("./sensor_data/count.txt", "w+")
+            countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "w+")
 
             count = count + 1
             print count
@@ -63,7 +63,7 @@ def main():
             print('Failed to get reading. Try again!')
             error = {{['tempSensor']:'error', ['timestamp']:time1}}
 
-            with open('./sensor_data/error_log', 'w+') as error_log:
+            with open('/home/pi/cs307/TEARv/pi/sensor_data/error_log', 'w+') as error_log:
                 json.dump(error, error_log)
             break
 

@@ -20,7 +20,7 @@ def run(day, start, end):
         return 0
 
     #check if there is reading error
-    errorfile = 'cs307/TEARv/pi/sensor_data/sensor_data/error_log'
+    errorfile = '/home/pi/cs307/TEARv/pi/sensor_data/error_log'
     try:
         print 'check sensor error'
         with open(errorfile) as f:
