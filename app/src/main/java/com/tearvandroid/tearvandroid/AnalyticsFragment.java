@@ -25,6 +25,8 @@ public class AnalyticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //
+        /*
         JSONObject data1 = new JSONObject();
         try{
             data1.put("id", 1);
@@ -81,7 +83,7 @@ public class AnalyticsFragment extends Fragment {
         results.put(data3);
         results.put(data4);
         results.put(data5);
-
+        */
         int y, x;
         x = -5;
         y = 0;
@@ -113,6 +115,39 @@ public class AnalyticsFragment extends Fragment {
         graphView.getGridLabelRenderer().setLabelHorizontalHeight(30);
 
         return view;
+
+    }
+
+    private void get_Data() {
+        int id = 0;
+        while(1) {
+            /*  url for accesing flask server url(id)
+
+        //results
+
+        //if returned 0 => no incoming data
+
+
+        // if returned is -1 => sensor error
+
+
+
+
+            //'results', 'count'
+            // count > 200       'count'
+            parse returned results
+            for (int i=0; i<200; i++) {
+            }
+
+
+
+             */
+
+        }
+
+
+
+        //
 
     }
 }
