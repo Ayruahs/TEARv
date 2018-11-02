@@ -51,9 +51,6 @@ def run(requestId):
         filehandle.seek(-1, os.SEEK_END)
         filehandle.write(']')
 
-    wfile = open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', "a")
-    wfile.write("]")
-
     with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy') as f1:
         results = json.load(f1)
 
