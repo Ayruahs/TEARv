@@ -47,6 +47,9 @@ def run(requestId):
     counter = 0
     print data
 
+    wfile = open(ffile, "a")
+    wfile.write("]")
+
     with open(ffile) as f1:
         results = json.load(f1)
 

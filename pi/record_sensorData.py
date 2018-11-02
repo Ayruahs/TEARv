@@ -25,6 +25,11 @@ def main():
         
     print 'before collecting'
     print count
+
+    if not os.path.isfile(ffile):
+        f = open(ffile, "w+")
+        f.write("[")
+        f.close()
     
     while True:
         counter = 0
@@ -56,6 +61,7 @@ def main():
             with open(ffile, 'a+') as json_file:
                 json.dump(data, json_file)
 
+            json_file.write(",")
             countFile.write(str(count))
             countFile.close()
 
