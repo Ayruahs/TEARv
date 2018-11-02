@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,14 +17,10 @@ public class ForgetpasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgetpassword);
 
         Button cancel_button = findViewById(R.id.cancel_action);
-        cancel_button.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    startActivity(new Intent(ForgetpasswordActivity.this, LoginActivity.class));
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                startActivity(new Intent(ForgetpasswordActivity.this, LoginActivity.class));
             }
         });
     }

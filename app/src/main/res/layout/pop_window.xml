@@ -4,10 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFAACC"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:theme="@style/FullscreenNoTitleTheme"
+    android:windowIsFloating = "true"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -28,8 +27,8 @@
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/login_window"
@@ -107,37 +106,37 @@
                     android:hint="Serial Number"
                     android:inputType="" />
 
-
                 <Button
-                    android:id="@+id/cancel_car"
+                    android:id="@+id/save_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/cancel_car"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="33dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="53dp"
+                    android:layout_marginLeft="53dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/button_round_small_light"
+                    android:text="Save"
+                    android:textColor="@color/grey" />
+
+                <Button
+                    android:id="@+id/cancel_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="53dp"
                     android:layout_marginBottom="40dp"
                     android:background="@drawable/button_round_small"
                     android:bottomLeftRadius="15dp"
                     android:bottomRightRadius="7dp"
-                    android:text="Cancel"
+                    android:text="@string/action_cancel"
                     android:textColor="@color/white"
                     android:topLeftRadius="7dp"
                     android:topRightRadius="7dp" />
-
-                <Button
-                    android:id="@+id/save_car"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/cancel_car"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/button_round_small_light"
-                    android:text="Save"
-                    android:textColor="@color/grey" />
 
             </RelativeLayout>
         </RelativeLayout>
