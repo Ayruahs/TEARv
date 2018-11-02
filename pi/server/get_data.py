@@ -66,5 +66,5 @@ def run(requestId):
 
 
 if __name__ == "__main__":
-    run()
+    run(0)
 

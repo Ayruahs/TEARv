@@ -94,7 +94,7 @@ def get_sensor_data():
     #send result back
     #
     now = datetime.datetime.now()
-    result = get_data.run(now.day, -1, -1)
+    result = get_data.run(0)
 
 
 
