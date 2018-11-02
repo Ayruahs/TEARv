@@ -15,6 +15,8 @@ def run(requestId):
         print count
         if len(count) == 0:
             return 0
+        else:
+            count = int(count)
     else:
         print 'no count.txt'
         return 0
