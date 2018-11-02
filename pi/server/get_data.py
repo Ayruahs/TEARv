@@ -47,14 +47,14 @@ def run(requestId):
     counter = 0
     print data
 
-    with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', 'rb+') as filehandle:
+    with open(ffile, 'rb+') as filehandle:
         filehandle.seek(-2, os.SEEK_END)
         last_c = filehandle.read()
         print last_c
         if last_c == ',':
             filehandle.write(']')
 
-    with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy') as f1:
+    with open(ffile) as f1:
         results = json.load(f1)
 
     if count > 200:
