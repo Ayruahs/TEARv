@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         final String email = user.getEmail().toString();
-        TextView mEmailView = (TextView) view.findViewById(R.id.email_title);
+        TextView mEmailView = (TextView) view.findViewById(R.id.email_id);
         mEmailView.setText(email);
 
         Button change_pass_button = (Button) view.findViewById(R.id.change_password_button);

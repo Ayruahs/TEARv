@@ -14,9 +14,9 @@
         android:background="@drawable/relative_layout">
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/email_id"
             android:layout_width="197dp"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -26,7 +26,6 @@
             android:ems="10"
             android:hint=""
             android:textSize="20sp" />
-
 
         <AutoCompleteTextView
             android:id="@+id/username"
@@ -112,8 +111,8 @@
             android:id="@+id/change_password_button"
             android:layout_width="161dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/email"
-            android:layout_alignRight="@+id/email"
+            android:layout_alignEnd="@+id/email_id"
+            android:layout_alignRight="@+id/email_id"
             android:layout_alignParentTop="true"
             android:layout_marginTop="177dp"
             android:layout_marginEnd="0dp"
