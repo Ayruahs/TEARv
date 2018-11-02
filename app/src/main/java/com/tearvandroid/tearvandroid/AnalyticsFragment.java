@@ -70,12 +70,69 @@ public class AnalyticsFragment extends Fragment {
         }catch (JSONException e){
             e.printStackTrace();
         }
+
+        JSONObject data6 = new JSONObject();
+        try{
+            data6.put("id", 6);
+            data6.put("temp", 3);
+            data6.put("humidity", 40);
+            data6.put("time", 6);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JSONObject data7 = new JSONObject();
+        try{
+            data7.put("id", 7);
+            data7.put("temp", 7);
+            data7.put("humidity", 60);
+            data7.put("time", 7);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JSONObject data8 = new JSONObject();
+        try{
+            data8.put("id", 8);
+            data8.put("temp", 9);
+            data8.put("humidity", 90);
+            data8.put("time", 8);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JSONObject data9 = new JSONObject();
+        try{
+            data9.put("id", 9);
+            data9.put("temp", 11);
+            data9.put("humidity", 80);
+            data9.put("time", 9);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JSONObject data10 = new JSONObject();
+        try{
+            data10.put("id", 10);
+            data10.put("temp", 10);
+            data10.put("humidity", 60);
+            data10.put("time", 10);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
         JSONArray results = new JSONArray();
         results.put(data1);
         results.put(data2);
         results.put(data3);
         results.put(data4);
         results.put(data5);
+//        results.put(data6);
+//        results.put(data7);
+//        results.put(data8);
+//        results.put(data9);
+//        results.put(data10);
 
         int y, x;
         x = -5;
@@ -97,7 +154,7 @@ public class AnalyticsFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            series.appendData(new DataPoint(x, y), true, 5);
+            series.appendData(new DataPoint(x, y), true, results.length());
         }
 
 
