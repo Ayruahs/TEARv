@@ -9,7 +9,7 @@ import os
 
 TZ = pytz.timezone("America/New_York")
 
-def main():
+def run():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
@@ -73,5 +73,5 @@ def main():
     countFile.close()
 
 if __name__ == "__main__":
-    main()
+    run()
 
