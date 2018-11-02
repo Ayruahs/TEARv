@@ -38,8 +38,6 @@ public class CarsInfoFragment extends Fragment {
     private void addNewCar(){
         //carPageLayout.setBackgroundColor(Color.argb(255,255,255,255));
         /*Toast.makeText(getActivity(), "debug" , Toast.LENGTH_SHORT).show();
-
-
         System.out.println("add button clicked");
         */
         Intent intent = new Intent(getActivity(), PopActivity.class);
