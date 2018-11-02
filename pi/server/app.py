@@ -21,20 +21,20 @@ def move_forward():
 @app.route('/api/turnLeft', methods=['GET'])
 def turn_left():
     init()
-    gpio.output(7, True)
-    gpio.output(11, False)
-    gpio.output(13, True)
-    gpio.output(15, False)
+    gpio.output(7, False)
+    gpio.output(11, True)
+    gpio.output(13, False)
+    gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
 
 @app.route('/api/turnRight', methods=['GET'])
 def turn_right():
     init()
-    gpio.output(7, False)
-    gpio.output(11, True)
-    gpio.output(13, False)
-    gpio.output(15, True)
+    gpio.output(7, True)
+    gpio.output(11, False)
+    gpio.output(13, True)
+    gpio.output(15, False)
     time.sleep(0.1)
     gpio.cleanup()
 
@@ -51,20 +51,21 @@ def move_backward():
 @app.route('/api/moveUpRight', methods=['GET'])
 def upRight():
     init()
-    gpio.output(7, False)
+    gpio.output(7, True)
     gpio.output(11, True)
     gpio.output(13, True)
-    gpio.output(15, True)
+    gpio.output(15, False)
+
     time.sleep(0.1)
     gpio.cleanup()
 
 @app.route('/api/moveUpLeft', methods=['GET'])
 def upLeft():
     init()
-    gpio.output(7, True)
+    gpio.output(7, False)
     gpio.output(11, True)
     gpio.output(13, True)
-    gpio.output(15, False)
+    gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
 
