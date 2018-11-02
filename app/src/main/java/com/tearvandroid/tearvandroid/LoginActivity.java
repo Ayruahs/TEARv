@@ -246,9 +246,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Toast.makeText(LoginActivity.this, "Signed in. ", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                showProgress(false);
+                                if (!user.isEmailVerified()) {
+                                    mAuth.signOut();
+                                    showProgress(false);
+                                    Toast.makeText(LoginActivity.this, "Please verify your email!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                }
+                                else {
+                                    showProgress(false);
+                                    startActivity(new Intent(LoginActivity.this, TabsActivity.class));
+                                }
 
-                                startActivity(new Intent(LoginActivity.this, TabsActivity.class));
                             } else {
                                 // If sign in fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();
