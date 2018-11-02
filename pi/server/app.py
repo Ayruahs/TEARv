@@ -1,5 +1,8 @@
 from flask import Flask
 import controls
+import get_data
+import io
+import json
 import time
 import RPi.GPIO as gpio
 
@@ -85,12 +88,19 @@ def backRight():
     time.sleep(1)
     gpio.cleanup()
 
-@app.route('/api/getTemperatureData')
-def get_temperature():
-    pass
+@app.route('/api/getSensorData')
+def get_sensor_data():
+    print ("temp: ")
+    #send result back
+    #
+    now = datetime.datetime.now()
+    result = get_data.run(0)
+
+
+
 @app.route('/api/test')
 def test():
-    print "Pi accessible"
+    print ("Pi accessible")
 
 def init():
     gpio.setmode(gpio.BOARD)
