@@ -5,7 +5,7 @@ import os
 
 # Get sensors' data from Pi and send it to the app
 
-def run():
+def run(requestId):
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
@@ -27,16 +27,22 @@ def run():
             error = json.load(f)
             time = error['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
+                print 'error'
                 return -1
             else:
                 # delete error file
                 os.remove(errorfile)
+                print 'old error'
 
     except IOError:
+        print 'no error'
         pass
 
     print 'getting data..'
-    data = {{'results':[], 'count': count}}
+    data = {}
+    data['results'] = []
+    data['id'] = 0
+    counter = 0
     print data
 
     with open(ffile) as f1:
@@ -46,10 +52,12 @@ def run():
         for i in range(200):
             #format json string to return
             data['results'].append(results[count - i])
+        data['count']  = 200
 
     else:
         for i in range(count):
             data['results'].append(results[i])
+        data['count']  = count
 
     print data
     return data
