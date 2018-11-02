@@ -49,7 +49,12 @@ def run(requestId):
 
     with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', 'rb+') as filehandle:
         filehandle.seek(-1, os.SEEK_END)
-        filehandle.write(']')
+        last_c = filehandle.read()
+        print 'last char'
+        print last_c
+        if last_c == ',':
+
+            filehandle.write(']')
 
     with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy') as f1:
         results = json.load(f1)
