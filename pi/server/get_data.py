@@ -47,10 +47,14 @@ def run(requestId):
     counter = 0
     print data
 
-    wfile = open(ffile, "a")
+    with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', 'rb+') as filehandle:
+        filehandle.seek(-1, os.SEEK_END)
+        filehandle.truncate()
+
+    wfile = open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', "a")
     wfile.write("]")
 
-    with open(ffile) as f1:
+    with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy') as f1:
         results = json.load(f1)
 
     if count > 200:

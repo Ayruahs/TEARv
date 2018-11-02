@@ -61,7 +61,7 @@ def main():
             with open(ffile, 'a+') as json_file:
                 json.dump(data, json_file)
                 json_file.write(",")
-        
+
             countFile.write(str(count))
             countFile.close()
 
