@@ -49,7 +49,7 @@ def run(requestId):
 
     with open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', 'rb+') as filehandle:
         filehandle.seek(-1, os.SEEK_END)
-        filehandle.truncate()
+        filehandle.write(']')
 
     wfile = open('/home/pi/cs307/TEARv/pi/sensor_data/2018-11-1-copy', "a")
     wfile.write("]")
