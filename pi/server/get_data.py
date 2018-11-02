@@ -5,7 +5,7 @@ import os
 
 # Get sensors' data from Pi and send it to the app
 
-def run(day, start, end):
+def run():
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
 
@@ -56,5 +56,5 @@ def run(day, start, end):
 
 
 if __name__ == "__main__":
-    main()
+    run()
 
