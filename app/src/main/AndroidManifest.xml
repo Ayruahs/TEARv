@@ -24,9 +24,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignupActivity" />
-        <activity android:name=".ForgetpasswordActivity" />
+        <activity android:name=".ForgetpasswordActivity"/>
         <activity android:name=".TabsActivity" />
         <activity android:name=".activity_addcar"></activity>
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.PopTheme"></activity>
     </application>
 
 </manifest>

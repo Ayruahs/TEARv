@@ -2,6 +2,7 @@ package com.tearvandroid.tearvandroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CarsInfoFragment extends Fragment {
+
+    RelativeLayout carPageLayout;
 
     @Nullable
     @Override
@@ -26,20 +30,24 @@ public class CarsInfoFragment extends Fragment {
                 addNewCar();
             }
         });
+        carPageLayout = view.findViewById(R.id.fragment_carsID);
 
         return view; //inflater.inflate(R.layout.fragment_cars, container, false);
     }
 
     private void addNewCar(){
-
-        Toast.makeText(getActivity(), "debug" , Toast.LENGTH_SHORT).show();
+        //carPageLayout.setBackgroundColor(Color.argb(255,255,255,255));
+        /*Toast.makeText(getActivity(), "debug" , Toast.LENGTH_SHORT).show();
 
 
         System.out.println("add button clicked");
-        Intent intent = new Intent(getActivity(), PopUpActivity.class);
+        */
+        Intent intent = new Intent(getActivity(), PopActivity.class);
         startActivity(intent);
         //startActivity(new Intent(getActivity(),PopUpActivity.class));
         //Dom added, Pop Window
+        //carPageLayout
+
     }
 
 }
