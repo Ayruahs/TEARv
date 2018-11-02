@@ -19,7 +19,8 @@ import org.json.JSONObject;
 
 public class AnalyticsFragment extends Fragment {
 
-    LineGraphSeries <DataPoint> series;
+    LineGraphSeries <DataPoint> tempSeries;
+    LineGraphSeries <DataPoint> humiditySeries;
 
     @Nullable
     @Override
@@ -128,11 +129,11 @@ public class AnalyticsFragment extends Fragment {
         results.put(data3);
         results.put(data4);
         results.put(data5);
-//        results.put(data6);
-//        results.put(data7);
-//        results.put(data8);
-//        results.put(data9);
-//        results.put(data10);
+        results.put(data6);
+        results.put(data7);
+        results.put(data8);
+        results.put(data9);
+        results.put(data10);
 
         int y, x;
         x = -5;
@@ -140,7 +141,10 @@ public class AnalyticsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_analytics, container, false);
         GraphView graphView = (GraphView) view.findViewById(R.id.graph);
-        series = new LineGraphSeries<DataPoint>();
+        GraphView humidityGraph = (GraphView) view.findViewById(R.id.humidityGraph);
+        tempSeries = new LineGraphSeries<DataPoint>();
+        humiditySeries = new LineGraphSeries<DataPoint>();
+
         for (int i = 0; i < results.length(); i++) {
             JSONObject currentEntry;
             try{
@@ -154,15 +158,22 @@ public class AnalyticsFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            series.appendData(new DataPoint(x, y), true, results.length());
+            tempSeries.appendData(new DataPoint(x, y), true, results.length());
+            humiditySeries.appendData(new DataPoint(x, y), true, results.length());
         }
 
 
-        graphView.addSeries(series);
+        graphView.addSeries(tempSeries);
         graphView.getGridLabelRenderer().setHorizontalAxisTitle("Time (sec)");
         graphView.getGridLabelRenderer().setVerticalAxisTitle("Temperature (degree C)");
         graphView.getGridLabelRenderer().setLabelVerticalWidth(70);
         graphView.getGridLabelRenderer().setLabelHorizontalHeight(30);
+
+        humidityGraph.addSeries(humiditySeries);
+        humidityGraph.getGridLabelRenderer().setHorizontalAxisTitle("Time (sec)");
+        humidityGraph.getGridLabelRenderer().setVerticalAxisTitle("Humidity");
+        humidityGraph.getGridLabelRenderer().setLabelVerticalWidth(70);
+        humidityGraph.getGridLabelRenderer().setLabelHorizontalHeight(30);
 
         return view;
 
