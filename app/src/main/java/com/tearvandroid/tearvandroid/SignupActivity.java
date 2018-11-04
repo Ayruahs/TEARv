@@ -125,7 +125,7 @@ public class SignupActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);
-
+    /*
             mAuth.sendSignInLinkToEmail(email, actionCodeSettings)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -136,6 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    */
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -192,7 +193,7 @@ public class SignupActivity extends AppCompatActivity {
 
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseUser user = auth.getCurrentUser();
-
+            /*
             user.sendEmailVerification()
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -203,6 +204,7 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    */
         }
     }
 
