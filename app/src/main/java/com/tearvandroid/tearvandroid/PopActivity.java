@@ -19,18 +19,16 @@ public class PopActivity  extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View oldView = this.findViewById(android.R.id.content);
-        Drawable background = oldView.getBackground();
-        oldView.setBackgroundColor(Color.parseColor("#33FFFFFF"));
         setContentView(R.layout.pop_window);
 
-
+        /*
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int height = dm.heightPixels;
         int width = dm.widthPixels;
 
         getWindow().setLayout((int)(width*.9),(int)(height*.7));
-
+        */
 
         Button cancel_button = (Button) findViewById(R.id.cancel_action);
         cancel_button.setOnClickListener(new View.OnClickListener() {
