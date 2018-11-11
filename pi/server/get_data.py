@@ -1,4 +1,5 @@
 import sys
+from flask import Flask
 import datetime
 import json
 import os
@@ -14,9 +15,11 @@ def run(requestId):
         count= countFile.readline()
         print count
         if len(count) == 0:
-            return 0
+            return -2
         else:
             count = int(count)
+            if count <= requestId:
+                return 0
     else:
         print 'no count.txt'
         return 0
@@ -40,11 +43,10 @@ def run(requestId):
         print 'no error'
         pass
 
+
     print 'getting data..'
     data = {}
     data['results'] = []
-    data['id'] = 0
-    counter = 0
     print data
 
     with open(ffile, 'rb+') as filehandle:
@@ -59,19 +61,21 @@ def run(requestId):
     with open(ffile) as f1:
         results = json.load(f1)
 
-    if count > 200:
-        for i in range(200):
-            #format json string to return
-            data['results'].append(results[count - i])
-        data['count']  = 200
+    length = count-requestId
+    if length > 200:
+        length = 200
 
-    else:
-        for i in range(count):
-            data['results'].append(results[i])
-        data['count']  = count
+    start = requestId
+
+    for i in range(length):
+        #format json string to return
+        start = start + i
+        data['results'].append(results[start])
+    data['count']  = length
+    data['lastId'] = start
 
     print data
-    return data
+    return Flask.jsonify(data)
 
 
 if __name__ == "__main__":

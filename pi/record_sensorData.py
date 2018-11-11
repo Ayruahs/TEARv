@@ -13,6 +13,12 @@ def main():
     sensor = Adafruit_DHT.DHT22
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+
+    if not os.path.isfile(ffile):
+        os.remove("/home/pi/cs307/TEARv/pi/sensor_data/count.txt")
+        f = open(ffile, "w+")
+        f.write("[")
+        f.close()
     
     if os.path.exists("/home/pi/cs307/TEARv/pi/sensor_data/count.txt"):
         countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "r")
@@ -25,11 +31,6 @@ def main():
         
     print 'before collecting'
     print count
-
-    if not os.path.isfile(ffile):
-        f = open(ffile, "w+")
-        f.write("[")
-        f.close()
     
     while True:
         counter = 0
