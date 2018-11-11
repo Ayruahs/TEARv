@@ -48,8 +48,8 @@ public class CarsInfoFragment extends Fragment {
         /*Toast.makeText(getActivity(), "debug" , Toast.LENGTH_SHORT).show();
         System.out.println("add button clicked");
         */
-        Intent intent = new Intent(getActivity(), PopActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getActivity(), PopActivity.class);
+        //startActivity(intent);
         //startActivity(new Intent(getActivity(),PopUpActivity.class));
         //Dom added, Pop Window
         //carPageLayout

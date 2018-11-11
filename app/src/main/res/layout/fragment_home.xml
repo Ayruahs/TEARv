@@ -11,7 +11,7 @@
         android:layout_height="60dp"
         android:backgroundTint="@color/colorAlert"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/arrow_down"
+        android:layout_alignLeft="@+id/arrow_down"
         android:layout_marginBottom="140dp"
         android:background="@drawable/arrow_up" />
 
@@ -21,9 +21,9 @@
         android:layout_height="60dp"
         android:backgroundTint="@color/colorAlert"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:background="@drawable/arrow_down" />
 
     <Button
@@ -32,9 +32,9 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/colorAlert"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="80dp"
-        android:layout_marginEnd="120dp"
+        android:layout_marginRight="120dp"
         android:background="@drawable/arrow_left" />
 
     <Button
@@ -43,9 +43,9 @@
         android:layout_height="60dp"
         android:backgroundTint="@color/colorAlert"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="80dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
         android:background="@drawable/arrow_right" />
 
     <Button
@@ -103,9 +103,9 @@
         android:id="@+id/tempLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Temp (C):"
         android:textSize="18dp"
@@ -128,9 +128,9 @@
         android:id="@+id/humidityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:layout_marginTop="12dp"
         android:text="Humidity:"
         android:textColor="@color/colorPrimaryDark"
@@ -141,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="9dp"
         android:layout_marginRight="30dp"
         android:text="67"
@@ -152,9 +152,9 @@
         android:id="@+id/record_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="65dp"
         android:textOn="STOP"
         android:textOff="REC"
