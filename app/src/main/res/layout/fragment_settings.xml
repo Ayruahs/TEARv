@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:label="Settings"
+    android:label="@string/setting_title"
     tools:context=".AnalyticsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/email_id"
-            android:layout_width="240dp"
+            android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -28,18 +28,36 @@
             android:hint=""
             android:textSize="20sp" />
 
-        <AutoCompleteTextView
-            android:id="@+id/username"
-            android:layout_width="190dp"
+        <TextView
+            android:id="@+id/username_text_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="126dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="38dp"
+            android:ems="6"
+            android:fontFamily="serif-monospace"
+            android:hint="@string/user_title"
+            android:text="User"
+            android:textColor="@color/grey"
+            android:textFontWeight="6"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/username_edit_view"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="130dp"
             android:layout_marginLeft="126dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="22dp"
             android:ems="10"
-            android:hint="user"
+            android:hint="@string/user_title"
             android:inputType="textEmailAddress" />
 
         <TextView
@@ -58,7 +76,7 @@
             android:text="@string/prompt_username"
             android:textColor="@color/grey"
             android:textFontWeight="4"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/email_title"
@@ -69,14 +87,14 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="21dp"
             android:layout_marginLeft="21dp"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="-16dp"
             android:layout_marginRight="-16dp"
             android:fontFamily="serif-monospace"
             android:text="@string/prompt_email"
             android:textColor="@color/grey"
             android:textFontWeight="4"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/password_title"
@@ -87,26 +105,54 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="187dp"
+            android:layout_marginTop="190dp"
             android:layout_marginEnd="-16dp"
             android:layout_marginRight="-16dp"
             android:fontFamily="serif-monospace"
             android:text="@string/prompt_password"
             android:textColor="@color/grey"
             android:textFontWeight="4"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
-            android:id="@+id/save_button"
+            android:id="@+id/edit_button"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
-            android:text="Save" />
+            android:text="@string/prompt_edit" />
+
+        <Button
+            android:id="@+id/username_save_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/ic_check_circle"
+            android:backgroundTint="@color/purple_button"
+            android:backgroundTintMode="src_in" />
+
+        <Button
+            android:id="@+id/username_cancel_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_cancel"
+            android:backgroundTint="@color/colorAlert"
+            android:backgroundTintMode="src_in" />
 
         <Button
             android:id="@+id/change_password_button"
@@ -115,10 +161,40 @@
             android:layout_alignEnd="@+id/email_id"
             android:layout_alignRight="@+id/email_id"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="177dp"
+            android:layout_marginTop="175dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:text="Change Password" />
+            android:text="@string/edit_password" />
+
+        <Button
+            android:id="@+id/password_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/email_id"
+            android:layout_alignRight="@+id/email_id"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/button_round_small"
+            android:backgroundTint="@color/purple_button"
+            android:text="@string/save_action" />
+
+        <Button
+            android:id="@+id/password_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/email_id"
+            android:layout_alignRight="@+id/email_id"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/button_round_small"
+            android:backgroundTint="@color/white_purple"
+            android:text="@string/action_cancel"
+
+            android:textColor="@color/grey" />
 
         <Button
             android:id="@+id/sign_out_button"
@@ -132,6 +208,36 @@
             android:layout_marginBottom="26dp"
             android:background="@drawable/button_round_small"
             android:text="@string/action_sign_out" />
+
+        <EditText
+            android:id="@+id/new_password"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="200dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginBottom="220dp"
+            android:ems="10"
+            android:hint="@string/new_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/grey" />
+
+        <EditText
+            android:id="@+id/new_password2"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="150dp"
+            android:ems="10"
+            android:hint="@string/retype_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/grey" />
 
     </RelativeLayout>
 

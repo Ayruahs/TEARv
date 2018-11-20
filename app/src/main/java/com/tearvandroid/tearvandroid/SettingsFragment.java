@@ -5,23 +5,42 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ViewSwitcher;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class SettingsFragment extends Fragment {
 
     private FirebaseAuth mAuth;
+    private EditText passwordView;
+    private EditText password2View;
+    private EditText usernameText;
+    private TextView usernameView;
+    private Button change_pass_button;
+    private Button password_save_button;
+    private Button password_cancel_button;
+    private Button username_save_button;
+    private Button username_cancel_button;
+    private Button username_edit_button;
 
     @Nullable
     @Override
@@ -38,18 +57,45 @@ public class SettingsFragment extends Fragment {
         });
 
         FirebaseUser user = mAuth.getCurrentUser();
-        final String email = user.getEmail().toString();
+        final String email = user.getEmail();
         TextView mEmailView = (TextView) view.findViewById(R.id.email_id);
         mEmailView.setText(email);
 
-        Button change_pass_button = (Button) view.findViewById(R.id.change_password_button);
+        passwordView = (EditText)view.findViewById(R.id.new_password);
+        password2View = (EditText)view.findViewById(R.id.new_password2);
+        passwordView.setVisibility(View.INVISIBLE);
+        password2View.setVisibility(View.INVISIBLE);
+
+        change_pass_button = (Button) view.findViewById(R.id.change_password_button);
         change_pass_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //mAuth.sendPasswordResetEmail(email);
-                //onCreateDialog(savedInstanceState);
+                changePassword();
             }
         });
+
+        password_save_button = (Button) view.findViewById(R.id.password_save_button);
+        password_cancel_button = (Button) view.findViewById(R.id.password_cancel_button);
+        password_save_button.setVisibility(View.INVISIBLE);
+        password_cancel_button.setVisibility(View.INVISIBLE);
+
+        username_save_button = (Button) view.findViewById(R.id.username_save_button);
+        username_cancel_button = (Button) view.findViewById(R.id.username_cancel_button);
+        username_edit_button = (Button) view.findViewById(R.id.edit_button);
+        username_save_button.setVisibility(View.INVISIBLE);
+        username_cancel_button.setVisibility(View.INVISIBLE);
+
+        username_edit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeUserName();
+            }
+        });
+
+        usernameText = (EditText) view.findViewById(R.id.username_edit_view);
+        usernameView = (TextView) view.findViewById(R.id.username_text_view);
+        usernameText.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -62,32 +108,116 @@ public class SettingsFragment extends Fragment {
         startActivity(intent);
         Toast.makeText(getActivity(), "Signed out " , Toast.LENGTH_SHORT).show();
     }
-/*
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = getLayoutInflater();
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog
-        // layout
-        builder.setView(inflater.inflate(R.layout.fragment_change_pass, null))
-                .setPositiveButton(R.string.prompt_email, "Save",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                //
-                            }
-                        })
-                .setNegativeButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                SettingsFragment.this.getDialog().dismiss;
-                            }
-                        });
-        return builder.create();
+
+    public void changeUserName() {
+        username_edit_button.setVisibility(View.INVISIBLE);
+        username_save_button.setVisibility(View.VISIBLE);
+        username_cancel_button.setVisibility(View.VISIBLE);
+
+        usernameText.setVisibility(View.VISIBLE);
+        usernameView.setVisibility(View.INVISIBLE);
+
+        username_save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: upload new user name to database
+                username_edit_button.setVisibility(View.INVISIBLE);
+                username_save_button.setVisibility(View.VISIBLE);
+            }
+        });
+
+        username_cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username_edit_button.setVisibility(View.VISIBLE);
+                username_save_button.setVisibility(View.INVISIBLE);
+                username_cancel_button.setVisibility(View.INVISIBLE);
+
+                usernameText.setVisibility(View.INVISIBLE);
+                usernameView.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
-    */
+
+    private void changePassword() {
+        // change button to save
+        change_pass_button.setVisibility(View.INVISIBLE);
+        password_save_button.setVisibility(View.VISIBLE);
+        password_cancel_button.setVisibility(View.VISIBLE);
+        passwordView.setVisibility(View.VISIBLE);
+        password2View.setVisibility(View.VISIBLE);
+
+        passwordView.setError(null);
+        password2View.setError(null);
+
+        password_cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_pass_button.setVisibility(View.VISIBLE);
+                password_save_button.setVisibility(View.INVISIBLE);
+                password_cancel_button.setVisibility(View.INVISIBLE);
+                passwordView.setVisibility(View.INVISIBLE);
+                password2View.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        password_save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean cancel = false;
+                View focusView = null;
+
+                String password = passwordView.getText().toString();
+                String password2 = password2View.getText().toString();
+
+                if (TextUtils.isEmpty(password)) {
+                    passwordView.setError(getString(R.string.error_field_required));
+                    focusView = passwordView;
+                    cancel = true;
+                }
+                else if (TextUtils.isEmpty(password2)) {
+                    password2View.setError(getString(R.string.error_field_required));
+                    focusView = password2View;
+                    cancel = true;
+                }
+                else if (!password.equals(password2)) {
+                    password2View.setError(getString(R.string.error_unmatch_password));
+                    focusView = password2View;
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    focusView.requestFocus();
+                }
+                else {
+                    setNewPassword(password);
+                }
+            }
+        });
+    }
+
+    private void setNewPassword(String password){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updatePassword(password)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User password updated.");
+                            Toast.makeText(getActivity(), "Password updated", Toast.LENGTH_SHORT).show();
+                            change_pass_button.setVisibility(View.VISIBLE);
+                            password_save_button.setVisibility(View.INVISIBLE);
+                            password_cancel_button.setVisibility(View.INVISIBLE);
+                            passwordView.setVisibility(View.INVISIBLE);
+                            password2View.setVisibility(View.INVISIBLE);
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Update password failed. Please try again later. ", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
 }
 

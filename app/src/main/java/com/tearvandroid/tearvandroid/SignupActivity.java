@@ -122,6 +122,7 @@ public class SignupActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            //TODO: upload username to database
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);

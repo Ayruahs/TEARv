@@ -12,4 +12,6 @@
     <color name="grey">#595758</color>
     <color name="black">#272d2d</color>
     <color name="white">#FDFFFC</color>
+    <color name="white_purple">#ECF0F1</color>
+    <color name="purple_button">#9BD1E5</color>
 </resources>
