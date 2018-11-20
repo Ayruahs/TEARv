@@ -90,13 +90,13 @@ def backRight():
     gpio.cleanup()
 
 @app.route('/api/getSensorData', methods=['GET'])
-def get_sensor_data():
+def get_sensor_data(requestId):
     #print ("temp: ")
     #send result back
     #
     #now = datetime.datetime.now()
-    result = get_data.run(0)
-    return flask.jsonify(result)
+    result = get_data.run(requestId)
+    return result
 
 @app.route('/api/test')
 def test():
