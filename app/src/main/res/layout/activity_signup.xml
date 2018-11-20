@@ -47,8 +47,6 @@
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 />
-
-
             </LinearLayout>
 
         <EditText
