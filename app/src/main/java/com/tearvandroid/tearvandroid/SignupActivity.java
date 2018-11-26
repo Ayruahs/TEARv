@@ -37,6 +37,15 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,21 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                //Toast.makeText(SignupActivity.this, "inside callback function", Toast.LENGTH_SHORT).show();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    sendVerificationEmail();
+                } else {
+                    // User is signed out
+
+                }
+            }
+        };
+
 
         Button mCancelButton = (Button) findViewById(R.id.cancel_action);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -124,19 +148,6 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-//            showProgress(true);
-    /*
-            mAuth.sendSignInLinkToEmail(email, actionCodeSettings)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                System.out.println("sending email verification: " + email);
-                                Log.d("Success", "Email sent.");
-                            }
-                        }
-                    });
-                    */
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -145,17 +156,7 @@ public class SignupActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign up success, update UI with the signed-in user's information
                                 Log.d("Success", "createUserWithEmail:success");
-                                Toast.makeText(SignupActivity.this, "Signed up. Please verify your email.", Toast.LENGTH_SHORT).show();
-
-                                //store user info to database
-                                db.collection("users").add(email).addOnSuccessListener(
-                                        new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d("create", "new document " + email + "successfully created");
-                                            }
-                                        }
-                                );
+                                //Toast.makeText(SignupActivity.this, "Signed up. Please verify your email.", Toast.LENGTH_SHORT).show();
 
                                 Map<String, Object> data = new HashMap<>();
                                 if (username.equals("") || username.length() == 0) {
@@ -177,6 +178,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 Log.w("upload", "Error writing document", e);
                                             }
                                         });
+
 
                             } else {
                                 // If sign up fails, display a message to the user.
@@ -215,23 +217,22 @@ public class SignupActivity extends AppCompatActivity {
 
     private void sendVerificationEmail()
     {
-        FirebaseUser user = mAuth.getCurrentUser();
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Toast.makeText(SignupActivity.this, "Inside verification email", Toast.LENGTH_SHORT).show();
         user.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            // email sent
-                            System.out.println("email sent");
-
+                            //Toast.makeText(SignupActivity.this, "Email successfully sent", Toast.LENGTH_SHORT).show();
                             // after email is sent just logout the user and finish this activity
-                            startActivity(new Intent(SignupActivity.this, TabsActivity.class));
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                            finish();
                         }
                         else
                         {
                             // email not sent, so display message and restart the activity or do whatever you wish to do
-                            System.out.println("failed to send email");
                             //restart this activity
                             overridePendingTransition(0, 0);
                             finish();
