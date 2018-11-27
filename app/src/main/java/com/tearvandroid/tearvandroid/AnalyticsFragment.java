@@ -8,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -25,6 +31,34 @@ public class AnalyticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        int id = 0;
+
+        //TODO: need to be put in while loop, exists when jump to different page
+        //request newest data points
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url ="http://192.168.43.190:8000/api/getSensorData?id="+id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                       id = getdata(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                error.toString();
+//                        textToChange.setText("That didn't work!");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+        //TODO: at the end of while loop
 
         JSONObject data1 = new JSONObject();
         try{
@@ -179,25 +213,17 @@ public class AnalyticsFragment extends Fragment {
 
     }
 
-//    private void get_Data() {
-//        int id = 0;
-//        while(1) {
-//            /*  url for accesing flask server url(id)
-//        //results
-//        //if returned 0 => no incoming data
-//        // if returned is -1 => sensor error
-//            //'results', 'count'
-//            // count > 200       'count'
-//            parse returned results
-//            for (int i=0; i<200; i++) {
-//            }
-//             */
-//
-//        }
-//
-//
-//
-//        //
-//
-//    }
+    private void getdata(String datapoints) {
+        try {
+            JSONObject data = new JSONObject(datapoints);
+
+            //if data['error'] = true => error
+            //else if data['count'] = 0 => no data/no new data
+
+            //return data['id']
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

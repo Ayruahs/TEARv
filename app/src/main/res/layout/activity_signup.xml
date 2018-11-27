@@ -20,8 +20,21 @@
         app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/signup_window"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!-- Login progress -->
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +87,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="127dp"
             android:ems="10"
-            android:hint="@string/prompt_username"
+            android:hint="@string/prompt_username_optional"
             android:inputType="textEmailAddress" />
 
         <EditText

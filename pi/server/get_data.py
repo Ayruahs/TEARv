@@ -9,17 +9,20 @@ import os
 def run(requestId):
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    data = {}
+    data['results'] = []
+    data['lastId'] = -1
+    data['count'] = 0
+    data['error'] = 'false'
 
     if os.path.isfile("/home/pi/cs307/TEARv/pi/sensor_data/count.txt"):
         countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "r")
         count= countFile.readline()
         print count
-        if len(count) == 0:
-            return -2
+        if len(count) == 0 or count <= requestId:
+            return data
         else:
             count = int(count)
-            if count <= requestId:
-                return 0
     else:
         print 'no count.txt'
         return 0
@@ -33,10 +36,12 @@ def run(requestId):
             time = error['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
                 print 'error'
-                return -1
+                data['error'] = 'true'
+                return data
             else:
                 # delete error file
                 os.remove(errorfile)
+                data['error'] = 'false'
                 print 'old error'
 
     except IOError:
@@ -45,8 +50,6 @@ def run(requestId):
 
 
     print 'getting data..'
-    data = {}
-    data['results'] = []
     print data
 
     with open(ffile, 'rb+') as filehandle:
@@ -61,21 +64,23 @@ def run(requestId):
     with open(ffile) as f1:
         results = json.load(f1)
 
-    length = count-requestId
-    if length > 200:
-        length = 200
+    total = count - requestId
+
+    if total >= 200:
+        total = 200
 
     start = requestId
 
-    for i in range(length):
+    for i in range(total):
         #format json string to return
         start = start + i
         data['results'].append(results[start])
-    data['count']  = length
-    data['lastId'] = start
+
+    data['count']  = total
+    data['lastId'] = count
 
     print data
-    return Flask.jsonify(data)
+    return data
 
 
 if __name__ == "__main__":

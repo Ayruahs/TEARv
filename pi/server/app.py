@@ -95,8 +95,9 @@ def get_sensor_data(requestId):
     #send result back
     #
     #now = datetime.datetime.now()
-    result = get_data.run(requestId)
-    return result
+    id = request.args.get('id')
+    result = get_data.run(id)
+    return flask.jsonify(result)
 
 @app.route('/api/test')
 def test():
