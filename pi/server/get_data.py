@@ -1,4 +1,5 @@
 import sys
+from flask import Flask
 import datetime
 import json
 import os
@@ -10,7 +11,7 @@ def run(requestId):
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
     data = {}
     data['results'] = []
-    data['id'] = -1
+    data['lastId'] = -1
     data['count'] = 0
     data['error'] = 'false'
 
@@ -19,7 +20,6 @@ def run(requestId):
         count= countFile.readline()
         print count
         if len(count) == 0 or count <= requestId:
-            data['id'] = count
             return data
         else:
             count = int(count)
@@ -48,6 +48,7 @@ def run(requestId):
         print 'no error'
         pass
 
+
     print 'getting data..'
     print data
 
@@ -66,17 +67,17 @@ def run(requestId):
     total = count - requestId
 
     if total >= 200:
-        for i in range(200):
-            #format json string to return
-            data['results'].append(results[count - i])
-        data['count']  = 200
+        total = 200
 
-    else:
-        for i in range(count):
-            data['results'].append(results[i])
-        data['count']  = total
+    start = requestId
 
-    data['id'] = count
+    for i in range(total):
+        #format json string to return
+        start = start + i
+        data['results'].append(results[start])
+
+    data['count']  = total
+    data['lastId'] = count
 
     print data
     return data

@@ -90,7 +90,7 @@ def backRight():
     gpio.cleanup()
 
 @app.route('/api/getSensorData', methods=['GET'])
-def get_sensor_data():
+def get_sensor_data(requestId):
     #print ("temp: ")
     #send result back
     #
