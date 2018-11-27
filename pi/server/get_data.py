@@ -8,13 +8,19 @@ import os
 def run(requestId):
     now = datetime.datetime.now()
     ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    data = {}
+    data['results'] = []
+    data['id'] = -1
+    data['count'] = 0
+    data['error'] = 'false'
 
     if os.path.isfile("/home/pi/cs307/TEARv/pi/sensor_data/count.txt"):
         countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "r")
         count= countFile.readline()
         print count
-        if len(count) == 0:
-            return 0
+        if len(count) == 0 or count <= requestId:
+            data['id'] = count
+            return data
         else:
             count = int(count)
     else:
@@ -30,10 +36,12 @@ def run(requestId):
             time = error['time']
             if datetime.datetime.utcnow().isoformat() - time < 5:
                 print 'error'
-                return -1
+                data['error'] = 'true'
+                return data
             else:
                 # delete error file
                 os.remove(errorfile)
+                data['error'] = 'false'
                 print 'old error'
 
     except IOError:
@@ -41,10 +49,6 @@ def run(requestId):
         pass
 
     print 'getting data..'
-    data = {}
-    data['results'] = []
-    data['id'] = 0
-    counter = 0
     print data
 
     with open(ffile, 'rb+') as filehandle:
@@ -59,7 +63,9 @@ def run(requestId):
     with open(ffile) as f1:
         results = json.load(f1)
 
-    if count > 200:
+    total = count - requestId
+
+    if total >= 200:
         for i in range(200):
             #format json string to return
             data['results'].append(results[count - i])
@@ -68,7 +74,9 @@ def run(requestId):
     else:
         for i in range(count):
             data['results'].append(results[i])
-        data['count']  = count
+        data['count']  = total
+
+    data['id'] = count
 
     print data
     return data

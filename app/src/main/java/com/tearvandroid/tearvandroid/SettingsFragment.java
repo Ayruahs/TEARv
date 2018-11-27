@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -41,12 +42,14 @@ public class SettingsFragment extends Fragment {
     private Button username_save_button;
     private Button username_cancel_button;
     private Button username_edit_button;
+    private FirebaseFirestore db;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         Button signout_button = (Button) view.findViewById(R.id.sign_out_button);
         signout_button.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +100,14 @@ public class SettingsFragment extends Fragment {
         usernameView = (TextView) view.findViewById(R.id.username_text_view);
         usernameText.setVisibility(View.INVISIBLE);
 
+        TextView faqView = (TextView)view.findViewById(R.id.faq_button);
+        faqView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prompFaq();
+            }
+        });
+
         return view;
     }
 
@@ -121,8 +132,18 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: upload new user name to database
-                username_edit_button.setVisibility(View.INVISIBLE);
-                username_save_button.setVisibility(View.VISIBLE);
+                String newname = usernameText.getText().toString();
+
+                if (TextUtils.isEmpty(newname)) {
+                    usernameText.setError(getString(R.string.error_field_required));
+                    usernameText.requestFocus();
+                }
+                else {
+
+
+                    username_edit_button.setVisibility(View.INVISIBLE);
+                    username_save_button.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -181,6 +202,12 @@ public class SettingsFragment extends Fragment {
                     focusView = password2View;
                     cancel = true;
                 }
+                // Check for a valid password, if the user entered one.
+                else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+                    passwordView.setError(getString(R.string.error_invalid_password));
+                    focusView = passwordView;
+                    cancel = true;
+                }
                 else if (!password.equals(password2)) {
                     password2View.setError(getString(R.string.error_unmatch_password));
                     focusView = password2View;
@@ -218,6 +245,15 @@ public class SettingsFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void prompFaq() {
+
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() >= 7;
     }
 }
 
