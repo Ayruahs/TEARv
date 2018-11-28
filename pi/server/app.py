@@ -101,7 +101,11 @@ def get_sensor_data(requestId):
 
 @app.route('/api/lightsOn', methods=['GET'])
 def lights_on():
+    pass
 
+@app.route('/api/lightsOff', methods=['GET'])
+def lights_off():
+    pass
 
 @app.route('/api/test')
 def test():
