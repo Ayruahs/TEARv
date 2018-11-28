@@ -99,6 +99,10 @@ def get_sensor_data(requestId):
     result = get_data.run(id)
     return flask.jsonify(result)
 
+@app.route('/api/lightsOn', methods=['GET'])
+def lights_on():
+
+
 @app.route('/api/test')
 def test():
     print ("Pi accessible")
