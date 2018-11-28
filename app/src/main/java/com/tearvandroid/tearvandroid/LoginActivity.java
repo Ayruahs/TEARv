@@ -246,17 +246,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Toast.makeText(LoginActivity.this, "Signed in. ", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                /*
-                                if (!user.isEmailVerified()) {
-                                    mAuth.signOut();
-                                    showProgress(false);
-                                    Toast.makeText(LoginActivity.this, "Please verify your email!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, LoginActivity.class));
-                                }
-                                else {*/
-                                    showProgress(false);
-                                    startActivity(new Intent(LoginActivity.this, TabsActivity.class));
-                               // }
+                                showProgress(false);
+                                checkIfEmailVerified();
+                                //startActivity(new Intent(LoginActivity.this, TabsActivity.class));
+                                // }
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -265,7 +258,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.w("Error", "signinWithEmail:failure", task.getException());
 
                                 showProgress(false);
-                                startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                //startActivity(new Intent(LoginActivity.this, LoginActivity.class));
                             }
 
                             // ...
@@ -274,6 +267,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         }
     }
+
+    private void checkIfEmailVerified() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user.isEmailVerified())
+        {
+            // user is verified, so you can finish this activity or send user to activity which you want.
+            //finish();
+            startActivity(new Intent(LoginActivity.this, TabsActivity.class));
+            Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            // email is not verified, so just prompt the message to the user and restart this activity.
+            // NOTE: don't forget to log out the user.
+            Toast.makeText(LoginActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+
+            //restart this activity
+
+        }
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -293,26 +309,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override

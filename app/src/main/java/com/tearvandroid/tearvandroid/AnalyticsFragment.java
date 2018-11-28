@@ -32,19 +32,26 @@ public class AnalyticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        int id = 0;
+        final int id = 0;
 
         //TODO: need to be put in while loop, exists when jump to different page
         //request newest data points
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url ="http://192.168.43.190:8000/api/getSensorData?id="+id;
+        String data;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                       id = getdata(response);
+                        try{
+                            JSONObject data = new JSONObject(response);
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+
+//                       data = getdata(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -213,17 +220,17 @@ public class AnalyticsFragment extends Fragment {
 
     }
 
-    private void getdata(String datapoints) {
-        try {
-            JSONObject data = new JSONObject(datapoints);
-
-            //if data['error'] = true => error
-            //else if data['count'] = 0 => no data/no new data
-
-            //return data['id']
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    private String getdata(String datapoints) {
+//        try {
+//            JSONObject data = new JSONObject(datapoints);
+//
+//            //if data['error'] = true => error
+//            //else if data['count'] = 0 => no data/no new data
+//
+//            //return data['id']
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 }
