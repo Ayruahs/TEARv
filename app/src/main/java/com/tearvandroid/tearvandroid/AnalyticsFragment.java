@@ -44,7 +44,7 @@ public class AnalyticsFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                       id = getdata(response);
+                       //id = getdata(response); //had to comment out cause getdata returns a void not an int
                     }
                 }, new Response.ErrorListener() {
             @Override

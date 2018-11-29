@@ -149,15 +149,27 @@
         android:textSize="20dp" />
 
     <ToggleButton
-        android:id="@+id/record_button"
+    android:id="@+id/record_button"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="65dp"
+    android:textOn="STOP"
+    android:textOff="REC"
+    android:background="@drawable/record_button" />
+
+    <ToggleButton
+        android:id="@+id/light_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="65dp"
-        android:textOn="STOP"
-        android:textOff="REC"
-        android:background="@drawable/record_button" />
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/lightbulb" />
 
 </RelativeLayout>

@@ -64,6 +64,10 @@ public class HomeFragment extends Fragment {
     private VirtualDisplay mVirtualDisplay;
     private MediaProjectionCallback mMediaProjectionCallback;
     private ToggleButton mToggleButton;
+
+    private ToggleButton lightButton;
+
+
     private MediaRecorder mMediaRecorder;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_PERMISSIONS = 10;
@@ -101,6 +105,9 @@ public class HomeFragment extends Fragment {
         rightArrow = (Button) view.findViewById(R.id.arrow_right);
 //        recordButton = (Button) view.findViewById(R.id.record_button);
         mToggleButton = (ToggleButton) view.findViewById(R.id.record_button);
+
+        lightButton = (ToggleButton) view.findViewById(R.id.light_button);
+
         textToChange = (TextView) view.findViewById(R.id.txt);
         upRightArrow = (Button) view.findViewById(R.id.arrow_up_right);
         upLeftArrow = (Button) view.findViewById(R.id.arrow_up_left);
@@ -182,7 +189,44 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        lightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url;
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
+
+                if (lightButton.isChecked()) {
+                    textToChange.setText("Lights Off");
+                    url = "http://192.168.43.190:8000/api/lightsOff";
+                    //lightButton.setChecked(false);
+                }
+                else{
+                    textToChange.setText("Lights On");
+                    url = "http://192.168.43.190:8000/api/lightsOn";
+                }
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
 
         upArrow.setOnClickListener(new View.OnClickListener() {
             @Override
