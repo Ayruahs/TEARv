@@ -52,8 +52,8 @@ count = 0
 def keyInput(event):
     global count
     init()
-    print 'Key: ', event.char
-    print 'Count: ', count
+    print('Key: ', event.char)
+    print('Count: ', count)
     keyPress = event.char
 
     if keyPress.lower() == 'k' and count > -256:

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import controls
 import get_data
 import io
@@ -142,7 +142,6 @@ def init():
     gpio.output(13, False)
     gpio.output(15, False)
     gpio.output(18, app.config['isOn'])
-    #gpio.cleanup()
 
 if __name__ == "__main__":
 #    controls.init()
