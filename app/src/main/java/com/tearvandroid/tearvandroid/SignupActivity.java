@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -161,41 +163,20 @@ public class SignupActivity extends AppCompatActivity {
                                 // Sign up success, update UI with the signed-in user's information
                                 Log.d("Success", "createUserWithEmail:success");
                                 Toast.makeText(SignupActivity.this, "Signed up. Please verify your email.", Toast.LENGTH_SHORT).show();
-
-                                //store user info to database
-                                Map<String, Object> data = new HashMap<>();
-                                if (TextUtils.isEmpty(username)) {
-                                    data.put("username", "User");
+                                View view = LayoutInflater.from(getApplication()).inflate(R.layout.fragment_settings, null);
+                                if (!TextUtils.isEmpty(username)) {
+                                    TextView usernameView = (TextView) view.findViewById(R.id.username_text_view);
+                                    usernameView.setText(username);
+                                    EditText usernameEdit = (EditText) view.findViewById(R.id.username_edit_view);
+                                    usernameEdit.setHint(username);
                                 }
-                                else {
-                                    data.put("username", username);
-                                }
-
-                                data.put("car", null);
-
-                                db.collection("users").document(email).set(data)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("upload", "DocumentSnapshot successfully written!");
-                                                System.out.println("DocumentSnapshot successfully written!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w("upload", "Error writing document", e);
-                                            }
-                                        });
-                                showProgress(false);
-                                startActivity(new Intent(SignupActivity.this, TabsActivity.class));
+                                uploadUserInfo(email, username);
                             } else {
                                 // If sign up fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();
                                 Toast.makeText(SignupActivity.this, "Failed to sign up: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.w("Error", "createUserWithEmail:failure", task.getException());
                                 showProgress(false);
-
                             }
 
                             // ...
@@ -219,6 +200,56 @@ public class SignupActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    private void uploadUserInfo(String email, String username) {
+
+        //store user info to database
+        Map<String, Object> user = new HashMap<>();
+        user.put(email, null);
+        db.collection("users").add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Success", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Fail", "Error adding document", e);
+                    }
+                });
+
+        Map<String, Object> data = new HashMap<>();
+        if (TextUtils.isEmpty(username)) {
+            data.put("username", "User");
+        }
+        else {
+            data.put("username", username);
+        }
+
+        data.put("car", null);
+
+        db.collection("users").document(email).set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("upload", "DocumentSnapshot successfully written!");
+                        System.out.println("DocumentSnapshot successfully written!");
+                        showProgress(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("upload", "Error writing document", e);
+                        showProgress(false);
+                    }
+                });
+
+        showProgress(false);
+        startActivity(new Intent(SignupActivity.this, TabsActivity.class));
     }
 
     private boolean isEmailValid(String email) {
