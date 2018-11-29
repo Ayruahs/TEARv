@@ -40,6 +40,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.graphics.Color;
+import android.os.CountDownTimer;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -59,6 +64,10 @@ public class HomeFragment extends Fragment {
     private VirtualDisplay mVirtualDisplay;
     private MediaProjectionCallback mMediaProjectionCallback;
     private ToggleButton mToggleButton;
+
+    private ToggleButton lightButton;
+
+
     private MediaRecorder mMediaRecorder;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_PERMISSIONS = 10;
@@ -82,6 +91,9 @@ public class HomeFragment extends Fragment {
     TextView textToChange;
     private boolean isRecording;
 
+    TextView tempTextView;
+    TextView humidityTextView;
+
     @Nullable
     @TargetApi(21)
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,11 +105,17 @@ public class HomeFragment extends Fragment {
         rightArrow = (Button) view.findViewById(R.id.arrow_right);
 //        recordButton = (Button) view.findViewById(R.id.record_button);
         mToggleButton = (ToggleButton) view.findViewById(R.id.record_button);
+
+        lightButton = (ToggleButton) view.findViewById(R.id.light_button);
+
         textToChange = (TextView) view.findViewById(R.id.txt);
         upRightArrow = (Button) view.findViewById(R.id.arrow_up_right);
         upLeftArrow = (Button) view.findViewById(R.id.arrow_up_left);
         downLeftArrow = (Button) view.findViewById(R.id.arrow_down_left);
         downRightArrow = (Button) view.findViewById(R.id.arrow_down_right);
+
+        tempTextView = (TextView) view.findViewById(R.id.tempValue);
+        humidityTextView = (TextView) view.findViewById(R.id.humidityValue);
 
         isRecording = false;
 
@@ -110,7 +128,105 @@ public class HomeFragment extends Fragment {
         mMediaRecorder = new MediaRecorder();
         mProjectionManager = (MediaProjectionManager) getActivity().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 
+        // the commented code below is the test to check if the temperature color changes if the value changes
 
+        new CountDownTimer(30000, 1000){
+            public void onTick(long millisUntilFinished) {
+                tempTextView.setText(""+(millisUntilFinished/1000 + 25));
+                humidityTextView.setText("" + (millisUntilFinished/1000 + 70));
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+                tempTextView.setText("40");
+            }
+        }.start();
+
+
+        tempTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int tempValue = Integer.parseInt(tempTextView.getText().toString());
+
+                if (tempValue > 40) {
+                    tempTextView.setTextColor(Color.RED);
+                } else {
+                    tempTextView.setTextColor(Color.GREEN);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        // Listener for when there is a change in the humidity value
+        humidityTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int humidityValue = Integer.parseInt(humidityTextView.getText().toString());
+                if (humidityValue > 80) {
+                    humidityTextView.setTextColor(Color.RED);
+                } else {
+                    humidityTextView.setTextColor(Color.GREEN);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        lightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url;
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+
+                if (lightButton.isChecked()) {
+                    textToChange.setText("Lights Off");
+                    url = "http://192.168.43.190:8000/api/lightsOff";
+                    //lightButton.setChecked(false);
+                }
+                else{
+                    textToChange.setText("Lights On");
+                    url = "http://192.168.43.190:8000/api/lightsOn";
+                }
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
 
         upArrow.setOnClickListener(new View.OnClickListener() {
             @Override

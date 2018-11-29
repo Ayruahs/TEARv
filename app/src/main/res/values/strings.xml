@@ -6,6 +6,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_username">Username</string>
+    <string name="prompt_username_optional">Username  (optional)</string>
     <string name="prompt_new_user">New User</string>
     <string name="action_sign_up">Sign up</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -16,6 +17,7 @@
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_unmatch_password">password does not match</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
@@ -24,6 +26,13 @@
 
     <!-- Strings related to Settings -->
     <string name="edit_password">Change Password</string>
+    <string name="save_action">Save</string>
+    <string name="user_title">user</string>
+    <string name="prompt_edit">Edit</string>
+    <string name="setting_title">Settings</string>
+    <string name="new_password">New Password *</string>
+    <string name="retype_password">Confirm password *</string>
+    <string name="username_equal">Enter a new username</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

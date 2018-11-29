@@ -1,15 +1,20 @@
 package com.tearvandroid.tearvandroid;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +40,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mUsernameView;
     private EditText mEmailView;
     private EditText mPasswordView;
+    private View mProgressView;
+    private View mSignupFormView;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -58,11 +65,14 @@ public class SignupActivity extends AppCompatActivity {
         mUsernameView = (EditText)findViewById(R.id.username);
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+        mSignupFormView = findViewById(R.id.signup_window);
+        mProgressView = findViewById(R.id.login_progress);
 
         Button mRegisterAction = (Button) findViewById(R.id.register_action);
         mRegisterAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgress(true);
                 attemptRegister();
             }
         });
@@ -82,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         final String username = mUsernameView.getText().toString();
         final String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -117,6 +127,13 @@ public class SignupActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -125,7 +142,7 @@ public class SignupActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);
-
+    /*
             mAuth.sendSignInLinkToEmail(email, actionCodeSettings)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -136,6 +153,7 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    */
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -145,54 +163,29 @@ public class SignupActivity extends AppCompatActivity {
                                 // Sign up success, update UI with the signed-in user's information
                                 Log.d("Success", "createUserWithEmail:success");
                                 Toast.makeText(SignupActivity.this, "Signed up. Please verify your email.", Toast.LENGTH_SHORT).show();
-
-                                //store user info to database
-                                db.collection("users").add(email).addOnSuccessListener(
-                                        new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d("create", "new document " + email + "successfully created");
-                                            }
-                                        }
-                                );
-
-                                Map<String, Object> data = new HashMap<>();
-                                if (username.equals("") || username.length() == 0) {
-                                    data.put("username", "User");
+                                View view = LayoutInflater.from(getApplication()).inflate(R.layout.fragment_settings, null);
+                                if (!TextUtils.isEmpty(username)) {
+                                    TextView usernameView = (TextView) view.findViewById(R.id.username_text_view);
+                                    usernameView.setText(username);
+                                    EditText usernameEdit = (EditText) view.findViewById(R.id.username_edit_view);
+                                    usernameEdit.setHint(username);
                                 }
-                                else {
-                                    data.put("username", username);
-                                }
-                                db.collection("users").document(email).set(data)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("upload", "DocumentSnapshot successfully written!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w("upload", "Error writing document", e);
-                                            }
-                                        });
-
+                                uploadUserInfo(email, username);
                             } else {
                                 // If sign up fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();
                                 Toast.makeText(SignupActivity.this, "Failed to sign up: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.w("Error", "createUserWithEmail:failure", task.getException());
+                                showProgress(false);
                             }
 
                             // ...
                         }
-
-
                     });
 
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseUser user = auth.getCurrentUser();
-
+            /*
             user.sendEmailVerification()
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -203,12 +196,95 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    */
+
+
         }
+    }
+
+    private void uploadUserInfo(String email, String username) {
+
+        //store user info to database
+        Map<String, Object> user = new HashMap<>();
+        user.put(email, null);
+        db.collection("users").add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Success", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Fail", "Error adding document", e);
+                    }
+                });
+
+        Map<String, Object> data = new HashMap<>();
+        if (TextUtils.isEmpty(username)) {
+            data.put("username", "User");
+        }
+        else {
+            data.put("username", username);
+        }
+
+        data.put("car", null);
+
+        db.collection("users").document(email).set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("upload", "DocumentSnapshot successfully written!");
+                        System.out.println("DocumentSnapshot successfully written!");
+                        showProgress(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("upload", "Error writing document", e);
+                        showProgress(false);
+                    }
+                });
+
+        showProgress(false);
+        startActivity(new Intent(SignupActivity.this, TabsActivity.class));
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with firebase email validation
         return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() >= 7;
+    }
+
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        mSignupFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     private void sendVerificationEmail()
