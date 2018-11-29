@@ -99,6 +99,18 @@ def get_sensor_data(requestId):
     result = get_data.run(id)
     return flask.jsonify(result)
 
+@app.route('/api/lightsOn', methods=['GET'])
+def lights_on():
+    init()
+    gpio.output(22, True)
+    time.sleep(5)
+
+@app.route('/api/lightsOff', methods=['GET'])
+def lights_off():
+    init()
+    gpio.output(22, False)
+    time.sleep(5)
+
 @app.route('/api/test')
 def test():
     print ("Pi accessible")
@@ -109,10 +121,13 @@ def init():
     gpio.setup(11, gpio.OUT)
     gpio.setup(13, gpio.OUT)
     gpio.setup(15, gpio.OUT)
+    gpio.setup(22, gpio.OUT)
+
     gpio.output(7, False)
     gpio.output(11, False)
     gpio.output(13, False)
     gpio.output(15, False)
+    gpio.output(22, False)
     #gpio.cleanup()
 
 if __name__ == "__main__":
