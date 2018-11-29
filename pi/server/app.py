@@ -104,9 +104,8 @@ def get_sensor_data(requestId):
     #send result back
     #
     #now = datetime.datetime.now()
-    id = request.args.get('id')
-    result = get_data.run(id)
-    return flask.jsonify(result)
+    result = get_data.run(0)
+    return jsonify(result)
 
 @app.route('/api/lightsOn', methods=['GET'])
 def lights_on():
