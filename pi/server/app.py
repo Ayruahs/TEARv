@@ -7,6 +7,7 @@ import time
 import RPi.GPIO as gpio
 
 app = Flask(__name__)
+app.config['isOn'] = False
 
 @app.route('/api/moveForward', methods=['GET'])
 def move_forward():
@@ -17,6 +18,7 @@ def move_forward():
     gpio.output(15, False)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/turnLeft', methods=['GET'])
 def turn_left():
@@ -27,6 +29,7 @@ def turn_left():
     gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/turnRight', methods=['GET'])
 def turn_right():
@@ -37,6 +40,7 @@ def turn_right():
     gpio.output(15, False)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/moveBackward', methods=['GET'])
 def move_backward():
@@ -47,6 +51,7 @@ def move_backward():
     gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/moveUpRight', methods=['GET'])
 def upRight():
@@ -58,6 +63,7 @@ def upRight():
 
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/moveUpLeft', methods=['GET'])
 def upLeft():
@@ -68,6 +74,7 @@ def upLeft():
     gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/moveBackLeft', methods=['GET'])
 def backLeft():
@@ -78,6 +85,7 @@ def backLeft():
     gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/moveBackRight', methods=['GET'])
 def backRight():
@@ -88,6 +96,7 @@ def backRight():
     gpio.output(15, True)
     time.sleep(0.1)
     gpio.cleanup()
+    init()
 
 @app.route('/api/getSensorData', methods=['GET'])
 def get_sensor_data(requestId):
@@ -101,15 +110,20 @@ def get_sensor_data(requestId):
 
 @app.route('/api/lightsOn', methods=['GET'])
 def lights_on():
+    #init()
+    app.config['isOn'] = True
     init()
-    gpio.output(22, True)
-    time.sleep(5)
+    gpio.output(18, app.config['isOn'])
+    #time.sleep(5)
+    #gpio.cleanup()
+    return "SDSD"
 
 @app.route('/api/lightsOff', methods=['GET'])
 def lights_off():
+    app.config['isOn'] = False
     init()
-    gpio.output(22, False)
-    time.sleep(5)
+    gpio.output(18, app.config['isOn'])
+    #time.sleep(0.1)
 
 @app.route('/api/test')
 def test():
@@ -121,13 +135,13 @@ def init():
     gpio.setup(11, gpio.OUT)
     gpio.setup(13, gpio.OUT)
     gpio.setup(15, gpio.OUT)
-    gpio.setup(22, gpio.OUT)
+    gpio.setup(18, gpio.OUT)
 
     gpio.output(7, False)
     gpio.output(11, False)
     gpio.output(13, False)
     gpio.output(15, False)
-    gpio.output(22, False)
+    gpio.output(18, app.config['isOn'])
     #gpio.cleanup()
 
 if __name__ == "__main__":
