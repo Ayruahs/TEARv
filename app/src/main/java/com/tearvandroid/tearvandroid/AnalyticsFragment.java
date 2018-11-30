@@ -1,5 +1,9 @@
 package com.tearvandroid.tearvandroid;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +28,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.tearvandroid.tearvandroid.fragments.AsyncInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
-public class AnalyticsFragment extends Fragment {
+public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
 
     LineGraphSeries <DataPoint> tempSeries;
     LineGraphSeries <DataPoint> humiditySeries;
@@ -41,20 +47,27 @@ public class AnalyticsFragment extends Fragment {
     GraphView graphView;
     GraphView humidityGraph;
     String result;
+    private Runnable mTimer;
+    View view;
+    int in;
+    AsyncInterface asyncInterface;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_analytics, container, false);
+        view = inflater.inflate(R.layout.fragment_analytics, container, false);
         graphView = (GraphView) view.findViewById(R.id.graph);
         humidityGraph = (GraphView) view.findViewById(R.id.humidityGraph);
         tempSeries = new LineGraphSeries<DataPoint>();
         humiditySeries = new LineGraphSeries<DataPoint>();
 
+
         new LongOperation().execute("");
 
+        //response(tempSeries);
+        //return view;
 //        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 //        String url = "http://192.168.43.190:8000/api/getSensorData";
 //
@@ -149,34 +162,71 @@ public class AnalyticsFragment extends Fragment {
 //        humidityGraph.getGridLabelRenderer().setLabelVerticalWidth(70);
 //        humidityGraph.getGridLabelRenderer().setLabelHorizontalHeight(30);
 //
+//        Log.d("oncreate", jsonArray.toString());
+        graphView.onDataChanged(false, false);
+        humidityGraph.onDataChanged(false, false);
         return view;
     }
 
+    
+    private class LongOperation extends AsyncTask<String, Integer, String> {
 
-    private class LongOperation extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            String url = "http://192.168.43.190:8000/api/getSensorData";
-
-            RequestFuture<String> future = RequestFuture.newFuture();
-            StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
-            queue.add(request);
-
-            try{
-                result = future.get();
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e){
-                e.printStackTrace();
-            }
-
-            Log.d("delayedResult", result);
-            return result;
+//            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+//            String url = "http://192.168.43.190:8000/api/getSensorData";
+//
+//            RequestFuture<String> future = RequestFuture.newFuture();
+//            StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
+//            queue.add(request);
+//
+//            try{
+//                result = future.get();
+//            } catch(InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e){
+//                e.printStackTrace();
+//            }
+//
+//            Log.d("delayedResult", result);
+//            return result;
+            return "";
         }
 
         protected void onPostExecute(String result) {
-            Log.d("afterExecution", result);
+
+            try{
+                JSONObject allEntries = new JSONObject(result);
+                jsonArray = allEntries.getJSONArray("results");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Log.d("afterExecution", jsonArray.toString());
+            for (int i = 1; i <= 30; i++) {
+
+//                try {
+//                    JSONObject currentEntry = jsonArray.getJSONObject(i);
+//                    Log.d("afterExecution", currentEntry.toString());
+//                    JSONArray firstEntry = currentEntry.getJSONArray("" + i);
+//                    JSONObject firstObject = firstEntry.getJSONObject(0);
+////                                    Log.d("humidity", firstObject.toString());
+//
+//                    double currentTemp = firstObject.getDouble("temperature");
+//                    double currentHumidity = firstObject.getDouble("humidity");
+//                    in = i;
+
+                    tempSeries.appendData(new DataPoint(i, i), true, 30);
+
+                    humiditySeries.appendData(new DataPoint(i, 1), true, 30);
+
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+            graphView.addSeries(tempSeries);
+            humidityGraph.addSeries(humiditySeries);
         }
 
     }
