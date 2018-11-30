@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,11 @@ public class HomeFragment extends Fragment {
     Button upLeftArrow;
     Button downRightArrow;
     Button downLeftArrow;
+
+    Button twistRight;
+    Button twistLeft;
+    Button returnHome;
+
     Button recordButton;
     TextView textToChange;
     private boolean isRecording;
@@ -103,6 +109,11 @@ public class HomeFragment extends Fragment {
         downArrow = (Button) view.findViewById(R.id.arrow_down);
         leftArrow = (Button) view.findViewById(R.id.arrow_left);
         rightArrow = (Button) view.findViewById(R.id.arrow_right);
+
+        twistRight = (Button) view.findViewById(R.id.rotate_right);
+        twistLeft = (Button) view.findViewById(R.id.rotate_left);
+        returnHome = (Button) view.findViewById(R.id.return_home);
+
 //        recordButton = (Button) view.findViewById(R.id.record_button);
         mToggleButton = (ToggleButton) view.findViewById(R.id.record_button);
 
@@ -197,14 +208,44 @@ public class HomeFragment extends Fragment {
 
 
                 if (lightButton.isChecked()) {
-                    textToChange.setText("Lights Off");
-                    url = "http://192.168.43.190:8000/api/lightsOff";
+                    textToChange.setText("Lights On");
+                    url = "http://192.168.43.190:8000/api/lightsOn";
                     //lightButton.setChecked(false);
                 }
                 else{
-                    textToChange.setText("Lights On");
-                    url = "http://192.168.43.190:8000/api/lightsOn";
+                    textToChange.setText("Lights Off");
+                    url = "http://192.168.43.190:8000/api/lightsOff";
                 }
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+//                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        twistRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textToChange.setText("Twist Right");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/twistLeft";
 
                 // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -228,9 +269,69 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        upArrow.setOnClickListener(new View.OnClickListener() {
+        twistLeft.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                textToChange.setText("Twist Left");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/twistRight";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        returnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textToChange.setText("Return Home");
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url ="http://192.168.43.190:8000/api/returnHome";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                textToChange.setText("Response is: "+ response.substring(0,500));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        error.toString();
+//                        textToChange.setText("That didn't work!");
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            }
+        });
+
+        upArrow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
                 textToChange.setText("Moved Up");
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -255,6 +356,14 @@ public class HomeFragment extends Fragment {
 
                 // Add the request to the RequestQueue.
                 queue.add(stringRequest);
+                /*
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                */
+                return false;
             }
         });
 

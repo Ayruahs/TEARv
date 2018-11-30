@@ -150,27 +150,63 @@
         android:textSize="20dp" />
 
     <ToggleButton
-    android:id="@+id/record_button"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginRight="30dp"
-    android:layout_marginTop="65dp"
-    android:textOn="STOP"
-    android:textOff="REC"
-    android:background="@drawable/record_button" />
+        android:id="@+id/record_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="65dp"
+        android:textOn="STOP"
+        android:textOff="REC"
+        android:background="@drawable/record_button" />
 
     <ToggleButton
         android:id="@+id/light_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="60dp"
         android:textOn=""
         android:textOff=""
-        android:background="@drawable/lightbulb" />
+        android:background="@drawable/lightbulb"
+        android:backgroundTint="@color/black"/>
+
+    <Button
+        android:id="@+id/rotate_right"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:backgroundTint="@color/colorAlert"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/arrow_right" />
+
+    <Button
+        android:id="@+id/return_home"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:backgroundTint="@color/colorAlert"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/return_home" />
+
+
+
+    <Button
+        android:id="@+id/rotate_left"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:backgroundTint="@color/colorAlert"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/arrow_left" />
 
 </RelativeLayout>
