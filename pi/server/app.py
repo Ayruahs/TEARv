@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import controls
+import datetime
 import get_data
 import io
 import json
@@ -207,8 +208,8 @@ def get_sensor_data(requestId):
     #send result back
     #
     #now = datetime.datetime.now()
-    result = get_data.run(0)
-    return jsonify(result)
+    obj = get_data.run(0)
+    return jsonify(obj)
 
 @app.route('/api/lightsOn', methods=['GET'])
 def lights_on():
@@ -216,16 +217,16 @@ def lights_on():
     app.config['isOn'] = True
     init()
     gpio.output(18, app.config['isOn'])
-    #time.sleep(5)
-    #gpio.cleanup()
     return "SDSD"
+
+
+    
 
 @app.route('/api/lightsOff', methods=['GET'])
 def lights_off():
     app.config['isOn'] = False
     init()
     gpio.output(18, app.config['isOn'])
-    #time.sleep(0.1)
 
 @app.route('/api/test')
 def test():
@@ -255,4 +256,8 @@ def init():
 if __name__ == "__main__":
 #    controls.init()
     
+<<<<<<< HEAD
     app.run(debug=False, host="0.0.0.0", port=8000)
+=======
+    app.run(debug=False, host="0.0.0.0", port=5000)
+>>>>>>> data-transfer
