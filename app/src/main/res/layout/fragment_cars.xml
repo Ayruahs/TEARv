@@ -15,19 +15,18 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="35dp"
-        android:text="Help Info:"
+        android:text="App Information:"
         />
     <TextView
         android:id="@+id/help"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="55dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="20dp"
         android:scrollbars="vertical"
-        android:text="
-Hi! This application is a prototype developed by Team 36 (TEARv) of CS 30700 course at Purdue University in the Fall of 2018. This page will help you understand how the application works and how to connect the Raspberry Pi powered TEARv to the app.\n
+        android:text="Hi! This application is a prototype developed by Team 36 (TEARv) of CS 30700 course at Purdue University in the Fall of 2018. This page will help you understand how the application works and how to connect the Raspberry Pi powered TEARv to the app.\n
 \n
 How to connect to the TEARv (if not auto connected):\n
 - Log in to the Raspberry Pi using either an ethernet cable or HDMI cable.\n
