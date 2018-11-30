@@ -257,7 +257,7 @@ public class SignupActivity extends AppCompatActivity {
     private void sendVerificationEmail()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(SignupActivity.this, "Inside verification email", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(SignupActivity.this, "Inside verification email", Toast.LENGTH_SHORT).show();
         user.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

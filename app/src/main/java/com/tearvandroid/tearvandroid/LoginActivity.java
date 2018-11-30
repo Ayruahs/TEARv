@@ -243,7 +243,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("Success", "signinUserWithEmail:success");
-                                Toast.makeText(LoginActivity.this, "Signed in. ", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(LoginActivity.this, "Signed in. ", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 showProgress(false);
@@ -254,7 +254,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             } else {
                                 // If sign in fails, display a message to the user.
                                 FirebaseException e = (FirebaseException) task.getException();
-                                Toast.makeText(LoginActivity.this, "Failed to sign in: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(LoginActivity.this, "Failed to sign in: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.w("Error", "signinWithEmail:failure", task.getException());
 
                                 showProgress(false);
@@ -276,13 +276,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // user is verified, so you can finish this activity or send user to activity which you want.
             //finish();
             startActivity(new Intent(LoginActivity.this, TabsActivity.class));
-            Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
         }
         else
         {
             // email is not verified, so just prompt the message to the user and restart this activity.
             // NOTE: don't forget to log out the user.
-            Toast.makeText(LoginActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, "Email not verified", Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
 
             //restart this activity
