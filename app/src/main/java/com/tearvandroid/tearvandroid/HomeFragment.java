@@ -45,6 +45,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.widget.VideoView;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,6 +101,8 @@ public class HomeFragment extends Fragment {
     TextView tempTextView;
     TextView humidityTextView;
 
+    VideoView mVideoView;
+
     @Nullable
     @TargetApi(21)
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -138,6 +141,10 @@ public class HomeFragment extends Fragment {
 
         mMediaRecorder = new MediaRecorder();
         mProjectionManager = (MediaProjectionManager) getActivity().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+
+        mVideoView = (VideoView) view.findViewById(R.id.live_feed);
+
+        String vidAddress = "";
 
         // the commented code below is the test to check if the temperature color changes if the value changes
 
