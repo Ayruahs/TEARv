@@ -18,7 +18,7 @@ def move_forward():
     gpio.output(11, True)
     gpio.output(13, True)
     gpio.output(15, False)
-    time.sleep(0.1)
+    time.sleep(0.3)
     gpio.cleanup()
     init()
 
@@ -29,7 +29,7 @@ def turn_left():
     gpio.output(11, True)
     gpio.output(13, False)
     gpio.output(15, True)
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -40,7 +40,7 @@ def turn_right():
     gpio.output(11, False)
     gpio.output(13, True)
     gpio.output(15, False)
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -51,7 +51,7 @@ def move_backward():
     gpio.output(11, False)
     gpio.output(13, False)
     gpio.output(15, True)
-    time.sleep(0.1)
+    time.sleep(0.3)
     gpio.cleanup()
     init()
 
@@ -63,7 +63,7 @@ def upRight():
     gpio.output(13, True)
     gpio.output(15, False)
 
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -74,7 +74,7 @@ def upLeft():
     gpio.output(11, True)
     gpio.output(13, True)
     gpio.output(15, True)
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -85,7 +85,7 @@ def backLeft():
     gpio.output(11, True)
     gpio.output(13, False)
     gpio.output(15, True)
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -96,7 +96,7 @@ def backRight():
     gpio.output(11, False)
     gpio.output(13, True)
     gpio.output(15, True)
-    time.sleep(0.1)
+    time.sleep(0.15)
     gpio.cleanup()
     init()
 
@@ -201,9 +201,10 @@ def twist_return():
         #print app.config['count']
 
         gpio.cleanup()
+        init()
 
 @app.route('/api/getSensorData', methods=['GET'])
-def get_sensor_data(requestId):
+def get_sensor_data():
     #print ("temp: ")
     #send result back
     #

@@ -31,7 +31,12 @@ def main():
         
     print 'before collecting'
     print count
-    
+
+    if (count > 0):
+        with open(ffile, "a+") as f2:
+            f2.seek(-2, os.SEEK_END)
+#            f2.write(",")
+   
     while True:
         counter = 0
         humidity1 = [0, 0, 0, 0]
@@ -74,7 +79,7 @@ def main():
                 json.dump(error, error_log)
             break
 
-        time.sleep(1)
+        time.sleep(2)
 
     print 'error'
     countFile.close()
