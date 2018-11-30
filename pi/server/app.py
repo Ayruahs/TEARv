@@ -217,9 +217,6 @@ def lights_on():
     app.config['isOn'] = True
     init()
     gpio.output(18, app.config['isOn'])
-    return "SDSD"
-
-
     
 
 @app.route('/api/lightsOff', methods=['GET'])
@@ -256,8 +253,4 @@ def init():
 if __name__ == "__main__":
 #    controls.init()
     
-<<<<<<< HEAD
     app.run(debug=False, host="0.0.0.0", port=8000)
-=======
-    app.run(debug=False, host="0.0.0.0", port=5000)
->>>>>>> data-transfer
