@@ -149,16 +149,7 @@ public class HomeFragment extends Fragment {
         mVideoView = (WebView) view.findViewById(R.id.live_feed);
 
         String vidAddress = "http://192.168.43.190:8080/?action=stream";
-        //String vidAddress = "http://susandennis.noip.me/mjpg/video.mjpg";
-        //mVideoView.setVideoURI(Uri.parse(vidAddress));
-        //----Uri vidsrc = Uri.parse(vidAddress);
-        //----mVideoView.setVideoURI(vidsrc);
-        //-mediaController = new MediaController();
-        //mVideoView.setMediaController(mediaController);
-        //streamView
         mVideoView.loadUrl(vidAddress);
-        //-------mVideoView.start();
-        // the commented code below is the test to check if the temperature color changes if the value changes
 
         new CountDownTimer(30000, 1000){
             public void onTick(long millisUntilFinished) {
