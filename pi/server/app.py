@@ -201,6 +201,7 @@ def twist_return():
         #print app.config['count']
 
         gpio.cleanup()
+        init()
 
 @app.route('/api/getSensorData', methods=['GET'])
 def get_sensor_data():
