@@ -46,6 +46,7 @@ def main():
             humidity1[counter], temperature1[counter] = Adafruit_DHT.read_retry(sensor, 9) 
             if humidity1[counter] is not None and temperature1[counter] is not None:
                 counter = counter + 1
+            time.sleep(2)
             
         temperature, humidity = statistics.median(temperature1),statistics.median(humidity1)    
         time1 = datetime.datetime.utcnow().isoformat()
@@ -53,7 +54,6 @@ def main():
         if humidity is not None and temperature is not None:
             print 'collecting'
             countFile = open("/home/pi/cs307/TEARv/pi/sensor_data/count.txt", "w+")
-
             count = count + 1
             print count
             data = {count:[]}
@@ -79,7 +79,6 @@ def main():
                 json.dump(error, error_log)
             break
 
-        time.sleep(2)
 
     print 'error'
     countFile.close()

@@ -88,6 +88,8 @@ def run(requestId):
     if total >= 200:
         total = 200
 
+    diff = count - 200
+
     start = requestId
 
     #print results
@@ -96,7 +98,7 @@ def run(requestId):
     for i in range(total):
         #format json string to return
         #print results[start]
-        data['results'].append(results[start])
+        data['results'].append(results[start + diff])
         start = start + 1
 
     data['count']  = total
