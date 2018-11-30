@@ -1,11 +1,15 @@
 package com.tearvandroid.tearvandroid;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -49,6 +53,9 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
     private Runnable mTimer;
     View view;
     int in;
+    private Runnable mTimer1;
+    private final Handler mHandler = new Handler();
+    Timer autoUpdate;
 
 
     @Nullable
@@ -61,8 +68,58 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
         tempSeries = new LineGraphSeries<DataPoint>();
         humiditySeries = new LineGraphSeries<DataPoint>();
 
+//        Timer timer  = new Timer();
+//
+//        autoUpdate = new Timer();
+//        autoUpdate.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Runnable runnable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        new LongOperation().execute("");
+//                    }
+//                };
+//
+//            }
+//        }, 0, 10000);
 
-        new LongOperation().execute("");
+//        void timerMethod()
+//        {
+//            timer.schedule(new TimerTask() {
+//                public void run() {
+//                    new LongOperation().execute("");
+//                }
+//            }, 10000, 10000);
+//
+//        };
+
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                new LongOperation().execute("");
+//                for (int i = 1; i <= 30; i++) {
+//                    tempSeries.appendData(new DataPoint(i, i), true, 30);
+//                    humiditySeries.appendData(new DataPoint(i, 1), true, 30);
+//                }
+            }
+        };
+
+        handler.postDelayed(runnable, 2000);
+
+
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                //new LongOperation().execute("");
+//                for (int i = 1; i <= 30; i++) {
+//                    tempSeries.appendData(new DataPoint(i, i), true, 30);
+//                    humiditySeries.appendData(new DataPoint(i, 1), true, 30);
+//                }
+//            }
+//        },1000);
+
 
         //response(tempSeries);
         //return view;
@@ -167,28 +224,59 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
     }
 
 
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        autoUpdate = new Timer();
+//        autoUpdate.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Runnable runnable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        updateUI();
+//                    }
+//                };
+////                runOnUiThread(new Runnable() {
+////                    public void run() {
+////                        updateHTML();
+////                    }
+////                });
+//            }
+//        }, 0, 10000);
+//    }
+
+    public void updateUI(){
+        new LongOperation().execute("");
+//        graphView.onDataChanged(false, false);
+//        humidityGraph.onDataChanged(false, false);
+
+    }
+
+
     private class LongOperation extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
-//            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//            String url = "http://192.168.43.190:8000/api/getSensorData";
-//
-//            RequestFuture<String> future = RequestFuture.newFuture();
-//            StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
-//            queue.add(request);
-//
-//            try{
-//                result = future.get();
-//            } catch(InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e){
-//                e.printStackTrace();
-//            }
-//
+            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+            String url = "http://192.168.43.190:8000/api/getSensorData";
+
+            RequestFuture<String> future = RequestFuture.newFuture();
+            StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
+            queue.add(request);
+
+            try{
+                result = future.get();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e){
+                e.printStackTrace();
+            }
+
 //            Log.d("delayedResult", result);
-//            return result;
-            return "";
+            return result;
+//            return "";
         }
 
         protected void onPostExecute(String result) {
@@ -202,26 +290,33 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
 
 
 //            Log.d("afterExecution", jsonArray.toString());
-            for (int i = 1; i <= 30; i++) {
+            Log.d("length", "length = " + jsonArray.length());
+            int startPoint = jsonArray.length() - 200 - 1;
+            for (int i = startPoint; i < jsonArray.length(); i++) {
 
-//                try {
-//                    JSONObject currentEntry = jsonArray.getJSONObject(i);
-//                    Log.d("afterExecution", currentEntry.toString());
-//                    JSONArray firstEntry = currentEntry.getJSONArray("" + i);
-//                    JSONObject firstObject = firstEntry.getJSONObject(0);
-////                                    Log.d("humidity", firstObject.toString());
-//
-//                    double currentTemp = firstObject.getDouble("temperature");
-//                    double currentHumidity = firstObject.getDouble("humidity");
-//                    in = i;
+                try {
+                    JSONObject currentEntry = jsonArray.getJSONObject(i);
+//                    Log.d("currentEntry", currentEntry.toString());
+                    Log.d("afterExecution", currentEntry.toString());
+                    JSONArray firstEntry = currentEntry.getJSONArray("" + (i+ 1));
 
-                    tempSeries.appendData(new DataPoint(i, i), true, 30);
+                    Log.d("firstEntry", firstEntry.toString());
+                    JSONObject firstObject = firstEntry.getJSONObject(0);
+                    Log.d("humidity", firstObject.toString());
 
-                    humiditySeries.appendData(new DataPoint(i, 1), true, 30);
+                    double currentTemp = firstObject.getDouble("temperature");
+                    double currentHumidity = firstObject.getDouble("humidity");
+                    Log.d("currentTemp", ""+currentTemp);
+                    Log.d("currentHumidity", ""+currentHumidity);
 
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
+                    tempSeries.appendData(new DataPoint(i, currentTemp), true, 200);
+                    humiditySeries.appendData(new DataPoint(i, currentHumidity), true, 200);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             graphView.addSeries(tempSeries);
             humidityGraph.addSeries(humiditySeries);
