@@ -203,7 +203,7 @@ def twist_return():
         gpio.cleanup()
 
 @app.route('/api/getSensorData', methods=['GET'])
-def get_sensor_data(requestId):
+def get_sensor_data():
     #print ("temp: ")
     #send result back
     #
