@@ -115,12 +115,13 @@ def twist_left():
     ]    
     if(app.config['count'] < 256):
         init()
-        for i in range(4):
+        for i in range(8):
             for halfstep in range(8):
                 for pin in range(4):
                     gpio.output(control_pins[pin], halfstep_seq[halfstep][pin])
                 time.sleep(0.001)
-        app.config['count'] = app.config['count'] + 4
+        app.config['count'] = app.config['count'] + 8
+        #print app.config['count']
 
         gpio.cleanup()
         init()
@@ -139,17 +140,66 @@ def twist_right():
         [1,1,0,0],
         [1,0,0,0]
     ]  
+
     if(app.config['count'] > -256):
         init()
-        for i in range(4):
+        for i in range(8):
             for halfstep in range(8):
                 for pin in range(4):
                     gpio.output(control_pins[pin], halfstep_seq2[halfstep][pin])
                 time.sleep(0.001)
-        app.config['count'] = app.config['count'] - 4
+        app.config['count'] = app.config['count'] - 8
+        #print app.config['count']
 
         gpio.cleanup()
         init()
+
+@app.route('/api/returnHome', methods=['GET'])
+def twist_return():
+    control_pins = [31,33,35,37]
+
+    halfstep_seq = [
+        [1,0,0,0],
+        [1,1,0,0],
+        [0,1,0,0],
+        [0,1,1,0],
+        [0,0,1,0],
+        [0,0,1,1],
+        [0,0,0,1],
+        [1,0,0,1]
+    ]    
+    
+    halfstep_seq2 = [
+        [1,0,0,1],
+        [0,0,0,1],
+        [0,0,1,1],
+        [0,0,1,0],
+        [0,1,1,0],
+        [0,1,0,0],
+        [1,1,0,0],
+        [1,0,0,0]
+    ]  
+    while(app.config['count'] > 0):
+        init()
+        for i in range(8):
+            for halfstep in range(8):
+                for pin in range(4):
+                    gpio.output(control_pins[pin], halfstep_seq2[halfstep][pin])
+                time.sleep(0.001)
+        app.config['count'] = app.config['count'] - 8
+        #print app.config['count']
+
+    while(app.config['count'] < 0):
+        init()
+        for i in range(8):
+            for halfstep in range(8):
+                for pin in range(4):
+                    gpio.output(control_pins[pin], halfstep_seq[halfstep][pin])
+                time.sleep(0.001)
+        app.config['count'] = app.config['count'] + 8
+        #print app.config['count']
+
+        gpio.cleanup()
 
 @app.route('/api/getSensorData', methods=['GET'])
 def get_sensor_data(requestId):
