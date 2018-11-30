@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.media.MediaRecorder;
@@ -46,6 +47,8 @@ import android.text.TextWatcher;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.widget.VideoView;
+import android.net.Uri;
+import android.widget.MediaController;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,7 +104,8 @@ public class HomeFragment extends Fragment {
     TextView tempTextView;
     TextView humidityTextView;
 
-    VideoView mVideoView;
+    WebView mVideoView;
+    MediaController mediaController;
 
     @Nullable
     @TargetApi(21)
@@ -142,10 +146,18 @@ public class HomeFragment extends Fragment {
         mMediaRecorder = new MediaRecorder();
         mProjectionManager = (MediaProjectionManager) getActivity().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 
-        mVideoView = (VideoView) view.findViewById(R.id.live_feed);
+        mVideoView = (WebView) view.findViewById(R.id.live_feed);
 
-        String vidAddress = "";
-
+        String vidAddress = "http://192.168.43.190:8080/?action=stream";
+        //String vidAddress = "http://susandennis.noip.me/mjpg/video.mjpg";
+        //mVideoView.setVideoURI(Uri.parse(vidAddress));
+        //----Uri vidsrc = Uri.parse(vidAddress);
+        //----mVideoView.setVideoURI(vidsrc);
+        //-mediaController = new MediaController();
+        //mVideoView.setMediaController(mediaController);
+        //streamView
+        mVideoView.loadUrl(vidAddress);
+        //-------mVideoView.start();
         // the commented code below is the test to check if the temperature color changes if the value changes
 
         new CountDownTimer(30000, 1000){
