@@ -98,6 +98,53 @@ def backRight():
     gpio.cleanup()
     init()
 
+@app.route('/api/twistLeft', methods=['GET'])
+def twist_left():
+    control_pins = [31,33,35,37]
+
+    halfstep_seq = [
+        [1,0,0,0],
+        [1,1,0,0],
+        [0,1,0,0],
+        [0,1,1,0],
+        [0,0,1,0],
+        [0,0,1,1],
+        [0,0,0,1],
+        [1,0,0,1]
+    ]    
+    init()
+    for i in range(4):
+        for halfstep in range(8):
+            for pin in range(4):
+                gpio.output(control_pins[pin], halfstep_seq[halfstep][pin])
+            time.sleep(0.001)
+
+    gpio.cleanup()
+    init()
+
+@app.route('/api/twistRight', methods=['GET'])
+def twist_right():
+    control_pins = [31,33,35,37]
+
+    halfstep_seq2 = [
+        [1,0,0,1],
+        [0,0,0,1],
+        [0,0,1,1],
+        [0,0,1,0],
+        [0,1,1,0],
+        [0,1,0,0],
+        [1,1,0,0],
+        [1,0,0,0]
+    ]  
+    init()
+    for i in range(4):
+        for halfstep in range(8):
+            for pin in range(4):
+                gpio.output(control_pins[pin], halfstep_seq2[halfstep][pin])
+            time.sleep(0.001)
+    gpio.cleanup()
+    init()
+
 @app.route('/api/getSensorData', methods=['GET'])
 def get_sensor_data(requestId):
     #print ("temp: ")
@@ -129,12 +176,19 @@ def test():
     print ("Pi accessible")
 
 def init():
+    control_pins = [31,33,35,37]
+
     gpio.setmode(gpio.BOARD)
     gpio.setup(7, gpio.OUT)
     gpio.setup(11, gpio.OUT)
     gpio.setup(13, gpio.OUT)
     gpio.setup(15, gpio.OUT)
     gpio.setup(18, gpio.OUT)
+
+    for pin in control_pins:
+        gpio.setup(pin, gpio.OUT)
+        gpio.output(pin, 0)
+
 
     gpio.output(7, False)
     gpio.output(11, False)
