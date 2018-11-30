@@ -1,5 +1,7 @@
 from flask import Flask
+from flask import jsonify
 import controls
+import datetime
 import get_data
 import io
 import json
@@ -93,9 +95,17 @@ def get_sensor_data():
     print ("temp: ")
     #send result back
     #
-    now = datetime.datetime.now()
-    result = get_data.run(now.day, -1, -1)
+    #now = datetime.datetime.now()
+    #ffile = '/home/pi/cs307/TEARv/pi/sensor_data/' + str(now.year) + '-' + str(now.month) + '-' + str(now.day)
+    
+    #with open(ffile) as f1:
+    #    results = f1.read()
+    #return results
+    #print 'Hi\n'
+    #return 'Todo...'
 
+    obj = get_data.run(0)
+    return jsonify(obj)
 
 
 @app.route('/api/test')
@@ -117,4 +127,4 @@ def init():
 if __name__ == "__main__":
 #    controls.init()
     
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0", port=5000)
