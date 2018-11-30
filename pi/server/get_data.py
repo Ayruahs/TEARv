@@ -60,17 +60,28 @@ def run(requestId):
     print 'getting data..'
     print data
 
-    with open(ffile, 'rb+') as filehandle:
-        filehandle.seek(-2, os.SEEK_END)
-        last_c = filehandle.read(1)
-        print 'last char'
-        print last_c
-        if last_c == ",":
-            filehandle.seek(-2, os.SEEK_END)
-            filehandle.write("]")
+#    with open(ffile, 'rb+') as filehandle:
+#        filehandle.seek(-2, os.SEEK_END)
+#        last_c = filehandle.read(1)
+#        print 'last char'
+#        print last_c
+#        if last_c == ",":
+#            filehandle.seek(-2, os.SEEK_END)
+#            filehandle.write("]")
 
     with open(ffile) as f1:
-        results = json.load(f1)
+        results1 = f1.read()
+        if (results1[len(results1) - 1] == ','):
+            temp = list(results1)
+            temp[len(results1) - 1] = ']'
+            results1 = "".join(temp)
+            #print temp
+            #print results1
+        results = json.loads(results1)
+
+#    with open(ffile, "w") as f2:
+#        f2.seek(-2, os.SEEK_END)
+#        f2.write(",")
 
     total = count - requestId
 
