@@ -100,12 +100,17 @@ public class HomeFragment extends Fragment {
     Button recordButton;
     TextView textToChange;
     private boolean isRecording;
+    public boolean isClick;
 
     TextView tempTextView;
     TextView humidityTextView;
 
     WebView mVideoView;
     MediaController mediaController;
+
+    public boolean isClick(boolean is){
+        return is;
+    }
 
     @Nullable
     @TargetApi(21)
@@ -377,9 +382,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        downArrow.setOnClickListener(new View.OnClickListener() {
+        downArrow.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent event) {
                 textToChange.setText("Moved Down");
                 // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -404,6 +409,7 @@ public class HomeFragment extends Fragment {
 
                 // Add the request to the RequestQueue.
                 queue.add(stringRequest);
+                return true;
             }
         });
 
