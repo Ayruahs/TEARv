@@ -8,6 +8,7 @@ import RPi.GPIO as gpio
 
 app = Flask(__name__)
 app.config['isOn'] = False
+app.config['count'] = 0
 
 @app.route('/api/moveForward', methods=['GET'])
 def move_forward():
@@ -112,15 +113,17 @@ def twist_left():
         [0,0,0,1],
         [1,0,0,1]
     ]    
-    init()
-    for i in range(4):
-        for halfstep in range(8):
-            for pin in range(4):
-                gpio.output(control_pins[pin], halfstep_seq[halfstep][pin])
-            time.sleep(0.001)
+    if(app.config['count'] < 256):
+        init()
+        for i in range(4):
+            for halfstep in range(8):
+                for pin in range(4):
+                    gpio.output(control_pins[pin], halfstep_seq[halfstep][pin])
+                time.sleep(0.001)
+        app.config['count'] = app.config['count'] + 4
 
-    gpio.cleanup()
-    init()
+        gpio.cleanup()
+        init()
 
 @app.route('/api/twistRight', methods=['GET'])
 def twist_right():
@@ -136,14 +139,17 @@ def twist_right():
         [1,1,0,0],
         [1,0,0,0]
     ]  
-    init()
-    for i in range(4):
-        for halfstep in range(8):
-            for pin in range(4):
-                gpio.output(control_pins[pin], halfstep_seq2[halfstep][pin])
-            time.sleep(0.001)
-    gpio.cleanup()
-    init()
+    if(app.config['count'] > -256):
+        init()
+        for i in range(4):
+            for halfstep in range(8):
+                for pin in range(4):
+                    gpio.output(control_pins[pin], halfstep_seq2[halfstep][pin])
+                time.sleep(0.001)
+        app.config['count'] = app.config['count'] - 4
+
+        gpio.cleanup()
+        init()
 
 @app.route('/api/getSensorData', methods=['GET'])
 def get_sensor_data(requestId):
