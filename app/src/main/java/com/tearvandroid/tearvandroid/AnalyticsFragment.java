@@ -28,7 +28,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.tearvandroid.tearvandroid.fragments.AsyncInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +49,6 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
     private Runnable mTimer;
     View view;
     int in;
-    AsyncInterface asyncInterface;
 
 
     @Nullable
@@ -168,7 +166,7 @@ public class AnalyticsFragment extends Fragment/* implements AsyncInterface*/ {
         return view;
     }
 
-    
+
     private class LongOperation extends AsyncTask<String, Integer, String> {
 
         @Override
