@@ -34,13 +34,9 @@ def run(requestId):
         return 0
 
     #check if there is reading error
-<<<<<<< HEAD
-    errorfile = '/home/pi/cs307/TEARv/pi/sensor_data/error_log'
-=======
 
     errorfile = '/home/pi/cs307/TEARv/pi/sensor_data/error_log'
 
->>>>>>> data-transfer
     try:
         print 'check sensor error'
         with open(errorfile) as f:
@@ -82,17 +78,6 @@ def run(requestId):
         total = 200
 
     start = requestId
-<<<<<<< HEAD
-
-    for i in range(total):
-        #format json string to return
-        start = start + i
-        data['results'].append(results[start])
-
-    data['count']  = total
-    data['lastId'] = count
-=======
->>>>>>> data-transfer
 
     #print results
     #print count
@@ -110,10 +95,6 @@ def run(requestId):
     return data
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    run(0)
-=======
->>>>>>> data-transfer
 
     run(0)
 
