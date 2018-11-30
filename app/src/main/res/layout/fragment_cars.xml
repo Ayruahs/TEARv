@@ -1,127 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/darker_gray"
+    android:background="@android:color/white"
     android:theme="@style/FullscreenNoTitleTheme"
     android:id="@+id/fragment_carsID">
 
-    <ScrollView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="5dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Name: Car1"
-                    android:textSize="22dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="50dp"
-                    android:text="IP address: 92830-38472"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Status: inactive"
-                    android:textColor="@color/colorAlert"
-                    android:textSize="18dp" />
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="5dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Name: Car2"
-                    android:textSize="22dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="50dp"
-                    android:text="IP address: 93472-35252"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Status:  active"
-                    android:textColor="@color/colorSecondary"
-                    android:textSize="18dp" />
-
-            </android.support.v7.widget.CardView>
-
-
-        </LinearLayout>
-
-
-    </ScrollView>
-
-    <android.support.design.widget.CoordinatorLayout
+        android:layout_marginBottom="435dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="35dp"
+        android:text="App Information:"
+        />
+    <TextView
+        android:id="@+id/help"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="20dp"
+        android:scrollbars="vertical"
+        android:text="Hi! This application is a prototype developed by Team 36 (TEARv) of CS 30700 course at Purdue University in the Fall of 2018. This page will help you understand how the application works and how to connect the Raspberry Pi powered TEARv to the app.\n
+\n
+How to connect to the TEARv (if not auto connected):\n
+- Log in to the Raspberry Pi using either an ethernet cable or HDMI cable.\n
+- Connect the Pi to the same network as your phone (Hotspot preferred)\n
+- Do not turn off the Pi but exit the session or exit the display that you are using and make sure that the battery pack is turned on for the motors.\n
+- Restart the app and you are good to go!\n
+\n
+How to use the application:\n
+The home tab contains a number of buttons that each do different things. Let’s go through them one by one:\n
+- The 4 arrows on the bottom right are for moving the TEARv in the respective directions. There are also invisible buttons on the corners of the invisible box of arrows which allow complex movement of the vehicle.\n
+- The 2 arrows on the bottom left control the camera and the middle ‘home’ button causes the camera to return to the front facing position.\n
+- The REC button on the top right records your screen and audio from your phone’s microphone. It will stop recording if you switch tabs.\n
+- The power button on the top left turns the flashlights in front of the car on and off. This can be useful in times of low light availability.\n
+\n
+The Analytics tab displays graphs of temperature and humidity data being collected in real time and get updated every minute.\n
+The settings tab allows you to view personal information of the user that is logged in as well make changes to username and password.\n
+\n
+Thanks for using the application!\n
+\n
+Project Owners:\n
+Rishabh Ramsisaria\n
+Rahul Balla\n
+Shaurya Sinha\n
+Dominic Miller\n
+Xu He\n
+"
+        />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_car_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            app:srcCompat="@drawable/ic_add" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginStart="0dp"-->
+        <!--android:layout_marginLeft="0dp"-->
+        <!--android:layout_marginTop="0dp">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="top"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--app:cardCornerRadius="5dp"-->
+                <!--app:cardPreventCornerOverlap="true"-->
+                <!--app:cardUseCompatPadding="true">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Name: Car1"-->
+                    <!--android:textSize="22dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginTop="50dp"-->
+                    <!--android:text="IP address: 92830-38472"-->
+                    <!--android:textSize="18dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="250dp"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Status: inactive"-->
+                    <!--android:textColor="@color/colorAlert"-->
+                    <!--android:textSize="18dp" />-->
+
+            <!--</android.support.v7.widget.CardView>-->
+
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="top"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--app:cardCornerRadius="5dp"-->
+                <!--app:cardPreventCornerOverlap="true"-->
+                <!--app:cardUseCompatPadding="true">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Name: Car2"-->
+                    <!--android:textSize="22dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginTop="50dp"-->
+                    <!--android:text="IP address: 93472-35252"-->
+                    <!--android:textSize="18dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="250dp"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Status:  active"-->
+                    <!--android:textColor="@color/colorSecondary"-->
+                    <!--android:textSize="18dp" />-->
+
+            <!--</android.support.v7.widget.CardView>-->
+
+
+        <!--</LinearLayout>-->
+
+
+    <!--</ScrollView>-->
+
+    <!--<android.support.design.widget.CoordinatorLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true">-->
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/add_car_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="end|bottom"-->
+        <!--android:layout_margin="16dp"-->
+        <!--app:srcCompat="@drawable/ic_add" />-->
+
+
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/textView"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="35dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="Help Info:"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginBottom="445dp"&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/textView2"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="20dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="Help Info:"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginTop="65dp"&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--</android.support.design.widget.CoordinatorLayout>-->
 
 </RelativeLayout>

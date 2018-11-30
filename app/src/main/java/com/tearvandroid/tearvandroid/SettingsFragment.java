@@ -100,13 +100,13 @@ public class SettingsFragment extends Fragment {
         usernameView = (TextView) view.findViewById(R.id.username_text_view);
         usernameText.setVisibility(View.INVISIBLE);
 
-        TextView faqView = (TextView)view.findViewById(R.id.faq_button);
-        faqView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prompFaq();
-            }
-        });
+        //TextView faqView = (TextView)view.findViewById(R.id.faq_button);
+        //faqView.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+              //  prompFaq();
+            //}
+        //});
 
         return view;
     }
